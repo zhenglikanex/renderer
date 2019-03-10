@@ -7,6 +7,8 @@ def main():
 		os.mkdir(build_path)
 	os.chdir(build_path)
 	os.system('cmake ..')
+	
+	os.system("pause")
 if '__main__' == __name__:
     main()
 	

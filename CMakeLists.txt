@@ -20,14 +20,33 @@ function(make_source_group file_name)
 	source_group(${group_path} FILES ${file_name})
 endfunction(make_source_group)
 
+#自动添加头文件路径
+function(auto_include_dir header_file)
+	#判断是否是绝对路径
+	if(IS_ABSOLUTE ${header_file})
+		#提取相对路劲
+		file(RELATIVE_PATH rel_path ${CMAKE_CURRENT_SOURCE_DIR} ${header_file})
+	else()
+		set(rel_path ${header_file})
+	endif()
+	
+	#得到文件的路劲部分
+	get_filename_component(_path ${rel_path} PATH)
+	include_directories(${_path})
+endfunction(auto_include_dir)
+
 #项目名字
 project(Aurora)
 
 
 include(./3rdparty/glfw3/CMakeLists.txt)
 
+#添加头文件引用目录
+include_directories(./3rdparty/glad/include)
+
 #遍历添加文件
 FILE(GLOB_RECURSE SRC_LIST "src/*.cpp")
+FILE(GLOB_RECURSE HEADER_LIST "src/*.h")
 
 #list(APPEND SRC_LIST 
 #	src/main.cpp
@@ -38,14 +57,20 @@ foreach(file_name ${SRC_LIST})
 	make_source_group(${file_name})
 endforeach()
 
-
+foreach(file_name ${HEADER_LIST})
+	make_source_group(${file_name})
+	auto_include_dir(${file_name})
+endforeach()
 
 #find_library(glfw3)
 LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glfw3)
 #include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glfw3/include)
 
 #指定生成目标
-add_executable(Aurora ${SRC_LIST})
+add_executable(Aurora ${SRC_LIST} ${HEADER_LIST})
 
-#添加子目录
+#设置VS工作目录
+set_target_properties(Aurora PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/resources)
+
+#添加库
 target_link_libraries(Aurora "glfw3")
