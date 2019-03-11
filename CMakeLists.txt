@@ -16,14 +16,16 @@ include(3rdparty/stb/CMakeLists.txt)
 
 #添加头文件引用目录
 #include_directories(./3rdparty/glad/include)
+include_directories(3rdparty)
 
 #添加h、hpp、c、cpp文件
 add_dir_header_and_src(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-
 #find_library(glfw3)
 LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glfw3)
 #include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glfw3/include)
+
+add_subdirectory(3rdparty/glm)
 
 #指定生成目标
 add_executable(Aurora ${SRC_LIST} ${HEADER_LIST})
@@ -34,3 +36,4 @@ set_target_properties(Aurora PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CU
 #添加库
 target_link_libraries(Aurora "glfw3")
 target_link_libraries(Aurora "opengl32")
+target_link_libraries(Aurora "glm_static")
