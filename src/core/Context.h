@@ -13,7 +13,7 @@ namespace aurora
 		Context();
 		~Context();
 
-		bool Initialize();
+		bool Initialized();
 		void Destory();
 
 		void Update();

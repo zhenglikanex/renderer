@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <thread>
 
+#include "Global.h"
 #include "Context.h"
 #include "Clock.h"
 
@@ -16,15 +17,13 @@ namespace aurora
 
 	App3D::~App3D()
 	{
-		Destory();
 	}
 
 	bool App3D::Create()
 	{
-		context_ptr_ = Context::GetInstance();
-		if (!context_ptr_)
+		if (!Context::GetInstance()->Initialized())
 		{
-			LOG_ERROR() << "Context Initalized Failed!" << LOG_END();
+			LOG_ERROR() << "Context初始化失败!" << LOG_END();
 			return false;
 		}
 
@@ -35,21 +34,11 @@ namespace aurora
 	{
 		OnDestory();
 
-		if (context_ptr_)
-		{
-			context_ptr_->Destory();
-		}
+		Context::GetInstance()->Destory();
 	}
 
 	void App3D::Update()
 	{
-		MSG msg;
-		while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
 		// 处理引擎循环
 		Context::GetInstance()->Update();
 
@@ -84,5 +73,8 @@ namespace aurora
 
 			fps_ = static_cast<int>(std::ceil(1.0f / Global::s_delta_frame_time));
 		}
+
+		// 释放资源
+		Destory();
 	}
 }

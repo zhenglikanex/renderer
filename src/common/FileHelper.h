@@ -18,8 +18,6 @@ namespace aurora
 		FileHelper();
 		~FileHelper();
 
-		bool Initialize() override; 
-
 		void AddSearchPath(const std::string& path);
 
 		filesystem::path GetFullPath(const std::string& file_name);

@@ -12,7 +12,7 @@ namespace aurora
 		Renderer(const Config& config);
 		~Renderer();
 
-		bool Initialize();
+		bool Initialized();
 		void Destory();
 
 		void Render();

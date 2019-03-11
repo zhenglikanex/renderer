@@ -27,7 +27,7 @@ namespace aurora
 		GameObjectFactory();
 		~GameObjectFactory();
 
-		bool Initialize() override;
+		bool Initialized() override;
 
 		void RegisterPerfab(const std::string& id,GameObjectPtr&& game_object);
 		void RemovePerfab(const std::string& id);

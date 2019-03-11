@@ -38,7 +38,7 @@ namespace aurora
 	public:
 		static LogEnd s_log_end;
 
-		bool Initialize() override;
+		bool Initialized() override;
 		void AddLogger(const std::string& file);
 
 		template<typename T>

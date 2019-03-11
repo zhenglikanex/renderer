@@ -14,27 +14,27 @@ namespace aurora
 
 		~Singleton(){}
 
-		static std::shared_ptr<T> GetInstance()
+		static const std::unique_ptr<T>& GetInstance()
 		{
 			if (instance_) {
 				return instance_;
 			}
-			instance_ = std::make_shared<T>();
-			instance_->Initialize();
+
+			instance_ = std::make_unique<T>();
 
 			return instance_;
 		}
 
-		virtual bool Initialize()
+		virtual bool Initialized()
 		{
 			return true;
 		}
 
 	protected:
-		static std::shared_ptr<T> instance_;
+		static std::unique_ptr<T> instance_;
 	};
 
-	template<class T> std::shared_ptr<T> Singleton<T>::instance_ = std::shared_ptr<T>();
+	template<class T> std::unique_ptr<T> Singleton<T>::instance_ = std::unique_ptr<T>();
 }
 
 #endif

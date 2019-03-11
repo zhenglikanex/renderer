@@ -4,9 +4,8 @@ namespace aurora
 {
 	LogEnd LogManager::s_log_end;
 
-	bool LogManager::Initialize()
+	bool LogManager::Initialized()
 	{
-
 		return true;
 	}
 

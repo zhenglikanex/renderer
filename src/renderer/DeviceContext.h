@@ -16,7 +16,7 @@ namespace aurora
 		DeviceContext(const std::string& title,uint32_t width,uint32_t height);
 		~DeviceContext();
 
-		bool Initlized();
+		bool Initialized();
 		void Destory();
 
 		void SwapBuffers();

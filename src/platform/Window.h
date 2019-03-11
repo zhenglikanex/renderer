@@ -15,7 +15,7 @@ namespace aurora
 
 		virtual ~Window() = 0 {}
 
-		virtual bool Initlized() = 0;
+		virtual bool Initialized() = 0;
 		virtual void Destory() = 0;
 
 		virtual void SwapBuffers() = 0;

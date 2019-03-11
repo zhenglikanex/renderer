@@ -1,11 +1,13 @@
 #include <iostream>
-#include "GLFW/glfw3.h"
-#include "Config.h"
+#include "MyApp.h"
 
 int main()
 {
-	aurora::Config config;
-	config.Load("aurora.config");
-	system("pause");
+	MyApp app;
+	if (app.Create())
+	{
+		app.Run();
+	}
+	
 	return 0;
 }

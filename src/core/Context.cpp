@@ -1,6 +1,6 @@
 #include "Context.h"
-
 #include "LogManager.h"
+#include "Renderer.h"
 
 namespace aurora
 {
@@ -10,10 +10,10 @@ namespace aurora
 
 	Context::~Context()
 	{
-
+		std::cout << "Context::~Context()" << std::endl;
 	}
 
-	bool Context::Initialize()
+	bool Context::Initialized()
 	{
 		// 加载引擎默认配置
 		if (!config_.Load("aurora.config"))
@@ -21,9 +21,15 @@ namespace aurora
 			LOG_ERROR() << "aurora.config加载失败!" << LOG_END();
 		}
 
+		renderer_ = MakeRendererPtr(config_);
+		if (!renderer_ || !renderer_->Initialized())
+		{
+			LOG_ERROR() << "Renderer初始化失败!" << LOG_END();
+		}
+
 		// 创建renerer
 		/*ogl_renderer_ = MakeOGLRendererPtr(config_ptr_);
-		if(!ogl_renderer_ || !ogl_renderer_->Initialize())
+		if(!ogl_renderer_ || !ogl_renderer_->Initialized())
 		{
 			LOG_ERROR() << "OGLRenderer Initalize failed!" << LOG_END();
 			return false;
@@ -43,7 +49,7 @@ namespace aurora
 
 	void Context::Update()
 	{
-		
+		renderer_->Render();
 	}
 
 	void Context::Quit()

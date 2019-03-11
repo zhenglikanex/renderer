@@ -6,20 +6,13 @@ namespace aurora
 {
 	FileHelper::FileHelper()
 	{
+		current_path_ = filesystem::current_path();
+		search_paths_.push_back(current_path_);
 	}
 
 	FileHelper::~FileHelper()
 	{
 
-	}
-
-	bool FileHelper::Initialize()
-	{
-		current_path_ = filesystem::current_path();
-
-		search_paths_.push_back(current_path_);
-
-		return true;
 	}
 
 	void FileHelper::AddSearchPath(const std::string& path)

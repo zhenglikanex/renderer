@@ -26,7 +26,6 @@ namespace aurora
 		virtual void OnDestory() = 0;
 		virtual void OnUpdate() = 0;
 	private:
-		ContextPtr context_ptr_;
 		float fps_interval_;
 		int fps_;
 	};

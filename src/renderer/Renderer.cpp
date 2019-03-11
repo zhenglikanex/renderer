@@ -14,18 +14,18 @@ namespace aurora
 
 	}
 
-	bool Renderer::Initialize()
+	bool Renderer::Initialized()
 	{
 		auto width = config_.GetInt("width");
 		auto height = config_.GetInt("height");
 		device_context_ = MakeDeviceContextPtr(config_.GetString("title"),width,height);
-		if (!device_context_ || device_context_->Initlized())
+		if (!device_context_ || !device_context_->Initialized())
 		{
 			LOG_ERROR() << "DeviceContext´´½¨Ê§°Ü!" << LOG_END();
 			return true;
 		}
 		ChangeViewprot(0,0,width, height);
-		glClearColor(1.0, 0.0, 0.0, 1.0);
+		glEnable(GL_DEPTH_TEST);
 
 		return true;
 	}
@@ -38,8 +38,12 @@ namespace aurora
 	void Renderer::Render()
 	{
 		//
+		glClearColor(0.0, 0.0, 0.0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
+
+		device_context_->SwapBuffers();
+
 		device_context_->PollEvents();
 	}
 

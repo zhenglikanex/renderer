@@ -19,7 +19,7 @@ namespace aurora
 		GLFW3Window(const std::string& title_name,uint32_t width,uint32_t height);
 		~GLFW3Window();
 
-		bool Initlized() override;
+		bool Initialized() override;
 		void Destory() override;
 
 		void SwapBuffers() override;

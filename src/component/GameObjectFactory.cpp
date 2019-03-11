@@ -29,7 +29,7 @@
 //		
 //	}
 //
-//	bool GameObjectFactory::Initialize()
+//	bool GameObjectFactory::Initialized()
 //	{
 //		// 预先注册的gameobject对象
 //		RegisterPerfab(s_kEmptyGameObject, MakeGameObjectPtr());

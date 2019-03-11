@@ -48,9 +48,10 @@ namespace aurora
 
 	GLFW3Window::~GLFW3Window()
 	{
+		std::cout << "GLFW3Window::~GLFW3Window()" << std::endl;
 	}
 
-	bool GLFW3Window::Initlized()
+	bool GLFW3Window::Initialized()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -104,6 +105,8 @@ namespace aurora
 			// ÍË³ö³ÌÐò
 			Context::GetInstance()->Quit();
 		}
+
+		glfwPollEvents();
 	}
 }
 

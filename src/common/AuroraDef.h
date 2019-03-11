@@ -1,10 +1,27 @@
 #ifndef AURORA_DEF_H_
 #define AURORA_DEF_H_
 
-#include "Aurora.h"
+#include <iostream>
+#include <memory>
+#include <ctime>
+#include <chrono>
+#include <iomanip>
+#include <cstdint>
 
-#include "Singleton.h"
-#include "Global.h"
+#ifndef AURORA_ASSERT
+#include <assert.h>
+#define AURORA_ASSERT(x) assert(x)
+#endif
+
+#include "LogManager.h"
+
+#define CHECK_GL_ERROR_DEBUG() \
+do {\
+	GLenum __error = glGetError(); \
+	if(__error) { \
+		LOG_ERROR() << "OpenGL error " << std::hex << __error << std::dec <<  " in " <<  __FILE__ << " " <<  __FUNCTION__  << " " <<  __LINE__ << LOG_END(); \
+	}\
+}while(false);
 
 #define MAKE_SHARED_PTR(class_name) \
 template<typename ... Args> \

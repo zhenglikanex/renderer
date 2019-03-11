@@ -9,13 +9,13 @@ namespace aurora
 
 	DeviceContext::~DeviceContext()
 	{
-
+		std::cout << "DeviceContext::~DeviceContext()" << std::endl;
 	}
 
-	bool DeviceContext::Initlized()
+	bool DeviceContext::Initialized()
 	{
 		window_ = MakeGLFW3WindowPtr(title_,width_,height_);
-		if (!window_ || !window_->Initlized())
+		if (!window_ || !window_->Initialized())
 		{
 			LOG_ERROR() << "window´´½¨Ê§°Ü!" << LOG_END();
 			return false;
@@ -36,6 +36,6 @@ namespace aurora
 
 	void DeviceContext::PollEvents()
 	{
-
+		window_->PollEvents();
 	}
 }
