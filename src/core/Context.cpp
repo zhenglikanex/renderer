@@ -45,4 +45,9 @@ namespace aurora
 	{
 		
 	}
+
+	void Context::Quit()
+	{
+		quit_ = true;
+	}
 }

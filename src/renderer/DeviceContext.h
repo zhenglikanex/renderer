@@ -1,8 +1,9 @@
 #ifndef DEVICE_CONTEXT_H_
 #define DEVICE_CONTEXT_H_
 
-#include "AuroraDef.h"
 #include <string>
+
+#include "AuroraDef.h"
 #include "Aurora.h"
 #include "glad/glad.h"
 #include "GLFW3Window.hpp"

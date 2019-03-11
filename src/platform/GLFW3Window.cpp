@@ -1,6 +1,5 @@
 #include "GLFW3Window.hpp"
 
-#include "glad/glad.h"
 #include "LogManager.h"
 #include "Context.h"
 #include "Renderer.h"
