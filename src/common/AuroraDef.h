@@ -47,6 +47,10 @@ namespace aurora
 	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
 	MAKE_SHARED_PTR(DeviceContext);
 
+	class RendererState;
+	using RendererStatePtr = std::shared_ptr<RendererState>;
+	MAKE_SHARED_PTR(RendererState);
+
 	class Context;
 	using ContextPtr = std::shared_ptr<Context>;
 	MAKE_SHARED_PTR(Context);

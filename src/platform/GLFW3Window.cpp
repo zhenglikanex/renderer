@@ -37,7 +37,7 @@ namespace aurora
 		cur_window->set_width(width);
 		cur_window->set_height(height);
 
-		Context::GetInstance()->renderer()->ChangeViewprot(0, 0, width, height);
+		Context::GetInstance()->renderer()->ChangeViewport(0, 0, width, height);
 	}
 
 	GLFW3Window::GLFW3Window(const std::string& title_name, uint32_t width, uint32_t height)

@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "DeviceContext.h"
+#include "RendererState.h"
 
 namespace aurora 
 {
@@ -24,7 +25,10 @@ namespace aurora
 			LOG_ERROR() << "DeviceContext´´½¨Ê§°Ü!" << LOG_END();
 			return true;
 		}
-		ChangeViewprot(0,0,width, height);
+
+		renderer_state_ = MakeRendererStatePtr();
+
+		ChangeViewport(0,0,width, height);
 		glEnable(GL_DEPTH_TEST);
 
 		return true;
@@ -47,10 +51,10 @@ namespace aurora
 		device_context_->PollEvents();
 	}
 
-	void Renderer::ChangeViewprot(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	void Renderer::ChangeViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
 	{
-		viewprot_width_ = width;
-		viewprot_height_ = height;
-		glViewport(0, 0, viewprot_width_, viewprot_height_);
+		viewport_width_ = width;
+		viewport_height_ = height;
+		glViewport(0, 0, viewport_width_, viewport_height_);
 	}
 }
