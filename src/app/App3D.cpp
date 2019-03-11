@@ -51,7 +51,7 @@ namespace aurora
 		// 第一帧时间设置为理想值;
 		Global::s_delta_frame_time = fps_interval_;
 
-		while(true)
+		while(!Context::GetInstance()->quit())
 		{
 			Clock begin_clock;
 

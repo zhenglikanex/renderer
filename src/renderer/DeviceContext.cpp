@@ -9,7 +9,7 @@ namespace aurora
 
 	DeviceContext::~DeviceContext()
 	{
-		std::cout << "DeviceContext::~DeviceContext()" << std::endl;
+		Destory();
 	}
 
 	bool DeviceContext::Initialized()

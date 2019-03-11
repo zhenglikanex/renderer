@@ -5,6 +5,7 @@
 namespace aurora
 {
 	Context::Context()
+		:quit_(false)
 	{
 	}
 

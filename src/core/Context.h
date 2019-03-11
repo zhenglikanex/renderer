@@ -20,9 +20,9 @@ namespace aurora
 		
 		void Quit();
 
-		const RendererPtr& renderer() const { return renderer_; }
-
+		bool quit() const { return quit_; }
 		const Config& config() const { return config_; }
+		const RendererPtr& renderer() const { return renderer_; }
 	private:
 		bool quit_;
 		Config config_;

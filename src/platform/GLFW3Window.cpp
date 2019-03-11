@@ -49,6 +49,7 @@ namespace aurora
 	GLFW3Window::~GLFW3Window()
 	{
 		std::cout << "GLFW3Window::~GLFW3Window()" << std::endl;
+		Destory();
 	}
 
 	bool GLFW3Window::Initialized()
@@ -100,7 +101,7 @@ namespace aurora
 
 	void GLFW3Window::PollEvents()
 	{
-		if (!glfwWindowShouldClose(window_))
+		if (glfwWindowShouldClose(window_))
 		{
 			// ÍË³ö³ÌÐò
 			Context::GetInstance()->Quit();
