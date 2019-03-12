@@ -23,11 +23,6 @@ namespace aurora
 	Shader::~Shader()
 	{
 		glDeleteProgram(id_);
-
-		for (auto& iter : name_by_uniform_map_)
-		{
-			free(iter.second.ptr);
-		}
 	}
 
 	GLint Shader::GetUniformLocation(const std::string& name) const
@@ -35,148 +30,139 @@ namespace aurora
 		return glGetUniformLocation(id_, name.c_str());
 	}
 
-	void Shader::CommitBool(const std::string& name, bool value)
+	void Shader::CommitUniform(const std::string& name, const UniformValue& uniform)
 	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
+		if (uniform.type == UniformType::kUnkowm)
 		{
 			return;
 		}
 
-		auto location = GetUniformLocation(name);
-		if (location > 0)
-		{
-			glUniform1i(location, (int)value);
-		}
-	}
-
-	void Shader::CommitInt(const std::string& name, int value)
-	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
+		// 判断缓存
+		auto iter = uniforms_.find(name);
+		if (iter != uniforms_.end() && iter->second == uniform)
 		{
 			return;
 		}
 
-		auto location = GetUniformLocation(name);
-		if (location >= 0)
+		// 更新缓存
+		if (iter == uniforms_.end())
 		{
-			glUniform1i(location, value);
+			uniforms_.insert(std::make_pair(name, uniform));
 		}
-	}
+		else 
+		{
+			iter->second = uniform;
+		}
 
-	void Shader::CommitUInt(const std::string& name, uint32_t value)
-	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
+		auto location = GetUniformLocation(name);
+		if (location < 0)
 		{
 			return;
 		}
 
-		auto location = GetUniformLocation(name);
-		if (location > 0)
-		{
-			glUniform1ui(location, value);
+		switch (uniform.type)
+		{	
+		case aurora::UniformType::kBool:
+			glUniform1i(location, (GLint)uniform.Bool);
+			break;
+		case aurora::UniformType::kInt:
+			glUniform1i(location, uniform.Int);
+			break;
+		case aurora::UniformType::kUInt:
+			glUniform1ui(location, uniform.UInt);
+			break;
+		case aurora::UniformType::kFloat:
+			glUniform1f(location, uniform.Float);
+			break;
+		case aurora::UniformType::kVec2:
+			glUniform2fv(location, 1, glm::value_ptr(uniform.Vec2));
+		case aurora::UniformType::kVec3:
+			glUniform3fv(location, 1, glm::value_ptr(uniform.Vec3));
+			break;
+		case aurora::UniformType::kVec4:
+			glUniform4fv(location, 1, glm::value_ptr(uniform.Vec4));
+			break;
+		case aurora::UniformType::kMat3:
+			glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(uniform.Mat3));
+			break;
+		case aurora::UniformType::kMat4:
+			glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(uniform.Mat4));
+			break;
+		default:
+			break;
 		}
 	}
 
-	void Shader::CommitFloat(const std::string& name, float value)
+	void Shader::CommitBool(const std::string& name, GLboolean value)
 	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
-		{
-			return;
-		}
-
-		auto location = GetUniformLocation(name);
-		if (location > 0)
-		{
-			glUniform1f(location, value);
-		}
+		UniformValue uniform;
+		uniform.type = UniformType::kBool;
+		uniform.Bool = value;
+		CommitUniform(name,uniform);
 	}
 
-	void Shader::CommitVec3(const std::string& name, float x, float y, float z)
+	void Shader::CommitInt(const std::string& name, GLint value)
 	{
-		auto vec3 = glm::vec3(x, y, z);
-		CommitVec3(name,vec3);
+		UniformValue uniform;
+		uniform.type = UniformType::kInt;
+		uniform.Int = value;
+		CommitUniform(name, uniform);
 	}
 
-	void Shader::CommitVec3(const std::string& name, const float* value)
+	void Shader::CommitUInt(const std::string& name, GLuint value)
 	{
-		auto vec3 = glm::vec3(value[0], value[1], value[2]);
-		CommitVec3(name, vec3);
+		UniformValue uniform;
+		uniform.type = UniformType::kUInt;
+		uniform.UInt = value;
+		CommitUniform(name, uniform);
+	}
+
+	void Shader::CommitFloat(const std::string& name, GLfloat value)
+	{
+		UniformValue uniform;
+		uniform.type = UniformType::kFloat;
+		uniform.Float = value;
+		CommitUniform(name, uniform);
+	}
+
+	void Shader::CommitVec2(const std::string& name, const glm::vec2& value)
+	{
+		UniformValue uniform;
+		uniform.type = UniformType::kVec2;
+		uniform.Vec2 = value;
+		CommitUniform(name, uniform);
 	}
 
 	void Shader::CommitVec3(const std::string& name, const glm::vec3& value)
 	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
-		{
-			return;
-		}
-		
-		auto location = GetUniformLocation(name);
-		if (location > 0)
-		{
-			glUniform3fv(location, 1, glm::value_ptr(value));
-		}
-	}
-
-	void Shader::CommitVec4(const std::string& name, float x, float y, float z, float w)
-	{
-		auto vec4 = glm::vec4(x, y, z, w);
-		CommitVec4(name, vec4);
-	}
-
-	void Shader::CommitVec4(const std::string& name, const float* value)
-	{
-		auto vec4 = glm::vec4(value[0],value[1],value[2],value[3]);
-		CommitVec4(name, vec4);
+		UniformValue uniform;
+		uniform.type = UniformType::kVec3;
+		uniform.Vec3 = value;
+		CommitUniform(name, uniform);
 	}
 
 	void Shader::CommitVec4(const std::string& name, const glm::vec4& value)
 	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
-		{
-			return;
-		}
-
-		auto location = GetUniformLocation(name);
-		if (location > 0)
-		{
-			glUniform4fv(location, 1, glm::value_ptr(value));
-		}
+		UniformValue uniform;
+		uniform.type = UniformType::kVec4;
+		uniform.Vec4 = value;
+		CommitUniform(name, uniform);
 	}
 
 	void Shader::CommitMat3(const std::string& name, const glm::mat3& value)
 	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
-		{
-			return;
-		}
-
-		auto location = GetUniformLocation(name);
-		if (location > 0)
-		{
-			glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
-		}
+		UniformValue uniform;
+		uniform.type = UniformType::kMat3;
+		uniform.Mat3 = value;
+		CommitUniform(name, uniform);
 	}
 
 	void Shader::CommitMat4(const std::string& name, const glm::mat4& value)
 	{
-		// 判断是否需要更新
-		if (!UpdateLocalValue(name, &value, sizeof(value)))
-		{
-			return;
-		}
-
-		auto location = GetUniformLocation(name);
-		if (location >= 0)
-		{
-			glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
-		}
+		UniformValue uniform;
+		uniform.type = UniformType::kMat4;
+		uniform.Mat4 = value;
+		CommitUniform(name, uniform);
 	}
 
 	void Shader::Bind()
@@ -334,41 +320,5 @@ namespace aurora
 		glDeleteShader(vs_shader);
 		glDeleteShader(gs_shader);
 		glDeleteShader(fs_shader);
-	}
-
-	bool Shader::UpdateLocalValue(const std::string& name, const void* memory, size_t size)
-	{
-		if (true)
-		{
-			return true;
-		}
-
-		auto iter = name_by_uniform_map_.find(name);
-		if (iter == name_by_uniform_map_.end())
-		{
-			UnkownValue value;
-			value.ptr = (void*)malloc(size);
-			std::memcpy(value.ptr, memory, size);
-			value.size = size;
-			name_by_uniform_map_.insert(std::make_pair(name, value));
-			
-			return true;
-		}
-
-		if (size == iter->second.size && std::memcmp(iter->second.ptr, memory, size))
-		{
-			// todo：这里可以用内存池优化
-
-			// 释放原来的内存
-			free(iter->second.ptr);
-
-			// 复制内存
-			iter->second.ptr = (void*)malloc(size);
-			std::memcpy(iter->second.ptr, memory, size);
-			iter->second.size = size;
-			return true;
-		}
-		
-		return false;
 	}
 }
