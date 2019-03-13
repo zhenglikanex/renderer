@@ -4,14 +4,15 @@
 #include <unordered_map>
 #include <array>
 
-#include "glad/glad.h"
-
 #include "Image.h"
+
+#include "glSupport.h"
+#include "Noncopyable.h"
 
 namespace aurora
 {
 
-	class Texture
+	class Texture : public Noncopyable
 	{
 	public:
 		// OGL的纹理格式封装

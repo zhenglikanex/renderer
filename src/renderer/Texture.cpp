@@ -131,8 +131,6 @@ namespace aurora
 		Bind();
 
 		glTexParameteri(type_,param_name,param);
-		
-		CHECK_GL_ERROR_DEBUG();
 	}
 
 	Texture2D::Texture2D(uint32_t width, uint32_t height, OGLTexFormatInfo format_info, const void* data /* = nullptr */)

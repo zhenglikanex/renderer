@@ -11,6 +11,8 @@ namespace aurora
 	class RendererState
 	{
 	public:
+		using BindBufferMap = std::unordered_map<GLenum, GLuint>;
+	public:
 		RendererState()
 		{
 
@@ -19,8 +21,22 @@ namespace aurora
 		{
 
 		}
+
+		void BindBuffer(GLenum target, GLuint id)
+		{
+			auto iter = bind_buffer_map_.find(target);
+			if (iter == bind_buffer_map_.end())
+			{
+				bind_buffer_map_.emplace(target, id);
+			}
+			else if (iter->second != id)
+			{
+				glBindBuffer(target, id);
+				iter->second = id;
+			}
+		}
 	private:
-		
+		BindBufferMap bind_buffer_map_;
 	};
 }
 

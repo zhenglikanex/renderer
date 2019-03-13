@@ -3,4 +3,6 @@
 
 #include "App3D.h"
 
+#define ENABLE_GL_CHECK 1
+
 #endif

@@ -15,14 +15,6 @@
 
 #include "LogManager.h"
 
-#define CHECK_GL_ERROR_DEBUG() \
-do {\
-	GLenum __error = glGetError(); \
-	if(__error) { \
-		LOG_ERROR() << "OpenGL error " << std::hex << __error << std::dec <<  " in " <<  __FILE__ << " " <<  __FUNCTION__  << " " <<  __LINE__ << LOG_END(); \
-	}\
-}while(false);
-
 #define MAKE_SHARED_PTR(class_name) \
 template<typename ... Args> \
 class_name##Ptr Make##class_name##Ptr(Args&& ... args) \
@@ -55,13 +47,17 @@ namespace aurora
 	using ContextPtr = std::shared_ptr<Context>;
 	MAKE_SHARED_PTR(Context);
 
-	class VertexBuffer;
-	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
-	MAKE_SHARED_PTR(VertexBuffer);
+	class GpuBuffer;
+	using GpuBufferPtr = std::shared_ptr<GpuBuffer>;
+	MAKE_SHARED_PTR(GpuBuffer);
 
-	class IndexBuffer;
-	using IndexBufferPtr = std::shared_ptr<IndexBuffer>;
-	MAKE_SHARED_PTR(IndexBuffer);
+	class VertexGpuBuffer;
+	using VertexGpuBufferPtr = std::shared_ptr<VertexGpuBufferPtr>;
+	MAKE_SHARED_PTR(VertexGpuBuffer);
+
+	class IndexGpuBuffer;
+	using IndexGpuBufferPtr = std::shared_ptr<IndexGpuBuffer>;
+	MAKE_SHARED_PTR(IndexGpuBuffer);
 
 	class VertexArrayObject;
 	using VertexArrayObjectPtr = std::shared_ptr<VertexArrayObject>;
