@@ -8,7 +8,7 @@ namespace aurora
 	class VertexGpuBuffer
 	{
 	public:
-		VertexGpuBuffer(uint32_t vertex_size,uint32_t vertex_count);
+		VertexGpuBuffer(uint32_t vertex_size,uint32_t vertex_count,const void* data);
 		~VertexGpuBuffer();
 
 		void Bind();

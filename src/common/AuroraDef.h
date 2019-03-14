@@ -58,6 +58,10 @@ namespace aurora
 	class IndexGpuBuffer;
 	using IndexGpuBufferPtr = std::shared_ptr<IndexGpuBuffer>;
 	MAKE_SHARED_PTR(IndexGpuBuffer);
+	
+	class VertexAttrib;
+	using VertexAttribPtr = std::shared_ptr<VertexAttrib>;
+	MAKE_SHARED_PTR(VertexAttrib);
 
 	class VertexArrayObject;
 	using VertexArrayObjectPtr = std::shared_ptr<VertexArrayObject>;

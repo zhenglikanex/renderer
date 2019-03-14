@@ -2,12 +2,11 @@
 
 namespace aurora
 {
-	VertexGpuBuffer::VertexGpuBuffer(uint32_t vertex_size, uint32_t vertex_count)
-		:gpu_buffer_(GL_ARRAY_BUFFER,vertex_size * vertex_count_,GL_STATIC_DRAW)
+	VertexGpuBuffer::VertexGpuBuffer(uint32_t vertex_size, uint32_t vertex_count,const void* data)
+		:gpu_buffer_(GL_ARRAY_BUFFER,vertex_size * vertex_count_,GL_STATIC_DRAW,data)
 		,vertex_size_(vertex_size)
 		,vertex_count_(vertex_count)
 	{
-
 	}
 
 	VertexGpuBuffer::~VertexGpuBuffer()

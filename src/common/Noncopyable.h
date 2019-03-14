@@ -5,6 +5,10 @@ namespace aurora
 {
 	class Noncopyable
 	{
+	public:
+		Noncopyable(){}
+		~Noncopyable(){}
+
 		Noncopyable(const Noncopyable&) = delete;
 		Noncopyable(Noncopyable&&) = delete;
 

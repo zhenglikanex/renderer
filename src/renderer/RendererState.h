@@ -22,6 +22,17 @@ namespace aurora
 
 		}
 
+		void BindVAO(GLuint vao)
+		{
+			if (bind_vao_ == vao)
+			{
+				return;
+			}
+			bind_vao_ = vao;
+
+			glBindVertexArray(bind_vao_);
+		}
+
 		void BindBuffer(GLenum target, GLuint id)
 		{
 			auto iter = bind_buffer_map_.find(target);
@@ -36,6 +47,7 @@ namespace aurora
 			}
 		}
 	private:
+		GLuint bind_vao_;
 		BindBufferMap bind_buffer_map_;
 	};
 }
