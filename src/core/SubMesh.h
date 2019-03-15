@@ -2,26 +2,31 @@
 #define SUBMESH_H_
 
 #include "AuroraDef.h"
+#include "glSupport.h"
+#include "RenderOperation.h"
 
 namespace aurora
 {
 	class SubMesh
 	{
 	public:
-		SubMesh(const VertexBufferPtr& vertex_buffer, const IndexBufferPtr& index_buffer);
-		SubMesh(const VertexBufferPtr& vertex_buffer, const IndexBufferPtr& index_buffer,const MaterialPtr& material_ptr);
+		SubMesh(const VertexArrayObjectPtr& vao);
 		~SubMesh();
 
-		const VertexBufferPtr& vertex_buffer() const { return vertex_buffer_; }
-		const IndexBufferPtr& index_buffer() const { return index_buffer_; }
+		RenderOperation GetRenderOperation() const;
 
-		void set_material(const MaterialPtr& material_ptr) { material_ptr_ = material_ptr; }
-		const MaterialPtr& material() const { return material_ptr_; }
+		void set_vao(const VertexArrayObjectPtr& vao) { vao_ = vao; }
+		const VertexArrayObjectPtr& vao() const { return vao_; }
+
+		void set_material(const MaterialPtr& material) { material_ = material; }
+		const MaterialPtr& material() const { return material_; }
+
+		void set_render_type(GLenum render_type) { render_type_ = render_type; }
+		GLenum render_type() const { return render_type_; }
 	private:
-		VertexBufferPtr vertex_buffer_;
-		IndexBufferPtr index_buffer_;
 		VertexArrayObjectPtr vao_;
-		MaterialPtr material_ptr_;
+		MaterialPtr material_;
+		GLenum render_type_;
 	};
 }
 

@@ -80,7 +80,7 @@ namespace aurora
 		std::array<const void*, 6> datas;
 		std::array<ImagePtr, 6> images;
 		
-		for (int i = 0; i < files_.size(); ++i)
+		for (size_t i = 0; i < files_.size(); ++i)
 		{
 			images[i] = MakeImagePtr(files_[i]);
 			if (images[i]->IsNull())

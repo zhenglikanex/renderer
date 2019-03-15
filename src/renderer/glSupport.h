@@ -26,7 +26,7 @@
         } \
         char msgBuf[4096]; \
         auto tokens = StringUtil::split(#glFunc, '('); \
-        sprintf(msgBuf, "OpenGL error 0x%04X %s in %s at line %i for %s\n", e, error_string.c_str(), __PRETTY_FUNCTION__, __LINE__, tokens[0].c_str()); \
+        sprintf_s(msgBuf, "OpenGL error 0x%04X %s in %s at line %i for %s\n", e, error_string.c_str(), __FUNCTION__, __LINE__, tokens[0].c_str()); \
 		LOG_ERROR() << msgBuf << LOG_END(); \
     } \
 }

@@ -1,6 +1,10 @@
 #include "Renderer.h"
 #include "DeviceContext.h"
 #include "RendererState.h"
+#include "VertexArrayObject.h"
+#include "VertexGpuBuffer.h"
+#include "IndexGpuBuffer.h"
+#include "GpuBuffer.h"
 
 namespace aurora 
 {
@@ -56,5 +60,26 @@ namespace aurora
 		viewport_width_ = width;
 		viewport_height_ = height;
 		glViewport(0, 0, viewport_width_, viewport_height_);
+	}
+
+	void Renderer::_RenderOperation(const RenderOperation& ro)
+	{
+		ro.vao->Bind();
+		ro.vao->UpdateVertexAttrib();
+		if (ro.vao->IsUseIndex())
+		{
+			if (ro.vao->index_buffer()->index_type() == IndexType::k16Bit)
+			{
+				glDrawElements(ro.render_type, ro.vao->index_buffer()->index_count(), GL_UNSIGNED_SHORT, 0);
+			}
+			else 
+			{
+				glDrawElements(ro.render_type, ro.vao->index_buffer()->index_count(), GL_UNSIGNED_INT, 0);
+			}
+		}
+		else 
+		{
+			glDrawArrays(ro.render_type, 0, ro.vao->vertex_buffer()->vertex_count());
+		}
 	}
 }

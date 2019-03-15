@@ -12,23 +12,33 @@ namespace aurora
 	class VertexAttrib
 	{
 	public:
-		VertexAttrib(VertexAttribFormat format,GLintptr offset,GLsizeiptr )
+		VertexAttrib(VertexAttribFormat format,size_t offset);
+		
+		VertexAttribFormat format() const { return format_; }
+		GLuint inex() const { return format_; }
+		GLuint component_num() const { return component_num_; }
+		GLenum type() const { return type_; }
+		GLboolean normalized() const { return normalized_; }
+		size_t offfset() const { return offset_; }
 	private:
-		VertexAttribFormat format;
-		GLintptr offset;
-		GLsizeiptr size;
+		VertexAttribFormat format_;
+		GLuint index_;
+		GLint component_num_;
+		GLenum type_;
+		GLboolean normalized_;
+		size_t offset_;
 	};
-	class VertexArrayObject
+	class VertexArrayObject : public Noncopyable
 	{
 	public:
-		VertexArrayObject(uint32_t vertex_size,uint32_t vertex_count,const void* data);
-		VertexArrayObject(uint32_t vertex_size, uint32_t vertex_count,const void* vertex_data,uint32_t index_size,uint32_t index_count,const void* index_data);
+		VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* data);
+		VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* vertex_data,IndexType index_type,uint32_t index_count,const void* index_data);
 		~VertexArrayObject();
 
 		void Bind();
 		void UnBind();
 
-		void BindVertexAttrib(const VertexAttrib& attrib);
+		void BindVertexAttrib(VertexAttribFormat format,size_t offset);
 		void UpdateVertexAttrib();
 	
 		GLuint id() const { return id_; }

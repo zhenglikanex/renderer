@@ -6,26 +6,36 @@
 
 namespace aurora
 {
-	VertexArrayObject::VertexArrayObject(uint32_t vertex_size,uint32_t vertex_count,const void* data)
-		: use_index_(false)
-		, vertex_buffer_(MakeVertexGpuBufferPtr(vertex_size,vertex_count,data))
-		, update_attrib_(false)
+	VertexAttrib::VertexAttrib(VertexAttribFormat format, size_t offset)
+		:format_(format)
+		,offset_(offset)
 	{
-		glGenVertexArrays(1, &id_);
+		index_ = AttribIndex(format_);
+		component_num_ = AttribCompoentNum(format_);
+		type_ = AttribType(format_);
+		normalized_ = AttribNormalized(format_);
 	}
 
-	VertexArrayObject::VertexArrayObject(uint32_t vertex_size, uint32_t vertex_count,const void* vertex_data,uint32_t index_size,uint32_t index_count,const void* index_data)
-		: use_index_(true)
-		, vertex_buffer_(MakeVertexGpuBufferPtr(vertex_size, vertex_count,vertex_data))
-		, index_buffer_(MakeIndexGpuBufferPtr(index_size,index_count,index_data))
+	VertexArrayObject::VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* data)
+		: use_index_(false)
+		, vertex_buffer_(MakeVertexGpuBufferPtr(vertex_type,vertex_count,data))
 		, update_attrib_(false)
 	{
-		glGenVertexArrays(1, &id_);
+		CHECK_GL_ERROR(glGenVertexArrays(1, &id_));
+	}
+
+	VertexArrayObject::VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* vertex_data,IndexType index_type,uint32_t index_count,const void* index_data)
+		: use_index_(true)
+		, vertex_buffer_(MakeVertexGpuBufferPtr(vertex_type, vertex_count,vertex_data))
+		, index_buffer_(MakeIndexGpuBufferPtr(index_type,index_count,index_data))
+		, update_attrib_(false)
+	{
+		CHECK_GL_ERROR(glGenVertexArrays(1, &id_));
 	}
 
 	VertexArrayObject::~VertexArrayObject()
 	{
-
+		CHECK_GL_ERROR(glDeleteVertexArrays(1, &id_));
 	}
 
 	void VertexArrayObject::Bind()
@@ -38,15 +48,16 @@ namespace aurora
 		renderer_->renderer_state()->BindVAO(0);
 	}
 
-	void VertexArrayObject::BindVertexAttrib(const VertexAttrib& attrib)
+	void VertexArrayObject::BindVertexAttrib(VertexAttribFormat format,size_t offset)
 	{
-		auto iter = attrib_map_.find(attrib.format);
+		auto iter = attrib_map_.find(format);
 		if (iter != attrib_map_.end())
 		{
 			return;
 		}
-		attrib_map_.insert(std::make_pair(attrib.format, attrib));
+
 		update_attrib_ = true;
+		attrib_map_.insert(std::make_pair(format, VertexAttrib(format, offset)));
 	}
 
 	void VertexArrayObject::UpdateVertexAttrib()
@@ -60,9 +71,11 @@ namespace aurora
 
 			for (auto & entry : attrib_map_)
 			{
-				VertexAttribFormat format = entry.second.format;
-				glVertexAttribPointer()
+				auto attrib = entry.second;
+			 	CHECK_GL_ERROR(glVertexAttribPointer(attrib.inex(), attrib.component_num(), attrib.type(), attrib.normalized(), vertex_buffer_->vertex_size(), (void*)attrib.offfset()));
 			}
+
+			update_attrib_ = false;
 		}
 	}
 }

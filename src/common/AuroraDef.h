@@ -52,7 +52,7 @@ namespace aurora
 	MAKE_SHARED_PTR(GpuBuffer);
 
 	class VertexGpuBuffer;
-	using VertexGpuBufferPtr = std::shared_ptr<VertexGpuBufferPtr>;
+	using VertexGpuBufferPtr = std::shared_ptr<VertexGpuBuffer>;
 	MAKE_SHARED_PTR(VertexGpuBuffer);
 
 	class IndexGpuBuffer;
