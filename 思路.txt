@@ -1,0 +1,35 @@
+for obj in scene_objs do
+	
+end
+
+for mesh in meshs do
+	for submesh in mesh.submeshs do
+		
+	end
+end
+
+for std::map<material,std::vec<renderable>> do
+	material->bind()
+	for renderable in renderables do
+	end
+end
+
+render(renderable)
+	Draw(0,count,instanced_num)
+end
+
+
+
+--------------------------------------
+mesh = loadMesh(name)
+meshRender->setmatreial();
+
+-------静态合批-----------------------
+可能会增加内存大小,1,合批后原来的mesh还在多了一份,2本来是同一分mesh的东西合批后可能出现多份的情况
+
+for mesh in meshs do
+	
+end
+
+
+-----动态合批------
