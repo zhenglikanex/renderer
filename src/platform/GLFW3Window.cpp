@@ -2,7 +2,7 @@
 
 #include "LogManager.h"
 #include "Context.h"
-#include "Renderer.h"
+#include "RenderSystem.h"
 #include "DeviceContext.h"
 #include "InputManager.h"
 
@@ -28,7 +28,7 @@ namespace aurora
 	}
 	void GLFW3Window::ScrollCallback(GLFWwindow* window, double x, double y)
 	{
-		InputManager::GetInstance()->InputScrollOffset(x, y);
+		InputManager::GetInstance()->InputScrollOffset((float)x, (float)y);
 	}
 
 	void GLFW3Window::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)

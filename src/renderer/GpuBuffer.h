@@ -30,7 +30,7 @@ namespace aurora
 		GLuint id() const { return id_; }
 		GLsizeiptr size() const { return target_; }
 	private:
-		RendererPtr renderer_;
+		RenderSystemPtr renderer_;
 
 		GLuint id_;
 		GLenum target_;

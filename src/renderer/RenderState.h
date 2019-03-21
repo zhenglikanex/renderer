@@ -8,16 +8,16 @@
 namespace aurora
 {
 	//用来管理当前OpenGL的渲染状态,减少状态切换
-	class RendererState
+	class RenderState
 	{
 	public:
 		using BindBufferMap = std::unordered_map<GLenum, GLuint>;
 	public:
-		RendererState()
+		RenderState()
 		{
 
 		}
-		~RendererState()
+		~RenderState()
 		{
 
 		}

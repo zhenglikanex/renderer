@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "AuroraDef.h"
+#include "Noncopyable.h"
 #include "glSupport.h"
 #include "VertexTypes.h"
 
@@ -46,7 +47,7 @@ namespace aurora
 		const VertexGpuBufferPtr& vertex_buffer() const { return vertex_buffer_; }
 		const IndexGpuBufferPtr& index_buffer() const { return index_buffer_; }
 	private:
-		RendererPtr renderer_;
+		RenderSystemPtr renderer_;
 
 		GLuint id_;
 		bool use_index_;

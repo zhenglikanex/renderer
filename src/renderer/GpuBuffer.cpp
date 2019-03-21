@@ -1,6 +1,6 @@
 #include "GpuBuffer.h"
-#include "Renderer.h"
-#include "RendererState.h"
+#include "RenderSystem.h"
+#include "RenderState.h"
 #include "Context.h"
 
 namespace aurora

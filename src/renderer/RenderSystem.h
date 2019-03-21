@@ -1,5 +1,5 @@
-#ifndef RENDERER_H_
-#define RENDERER_H_
+#ifndef RENDER_SYSTEM_H_
+#define RENDER_SYSTEM_H_
 
 #include "AuroraDef.h"
 #include "Config.h"
@@ -7,11 +7,11 @@
 
 namespace aurora
 {
-	class Renderer
+	class RenderSystem
 	{
 	public:
-		Renderer(const Config& config);
-		~Renderer();
+		RenderSystem(const Config& config);
+		~RenderSystem();
 
 		bool Initialized();
 		void Destory();
@@ -24,7 +24,7 @@ namespace aurora
 		uint32_t viewport_width() const { return viewport_width_; }
 		uint32_t viewport_height() const { return viewport_height_; }
 		const DeviceContextPtr& device_context() { return device_context_; }
-		const RendererStatePtr& renderer_state() { return renderer_state_; }
+		const RenderStatePtr& renderer_state() { return renderer_state_; }
 	private:
 		void _RenderOperation(const RenderOperation& ro);
 	private:
@@ -33,7 +33,7 @@ namespace aurora
 		uint32_t viewport_width_;
 		uint32_t viewport_height_;
 		DeviceContextPtr device_context_;
-		RendererStatePtr renderer_state_;
+		RenderStatePtr renderer_state_;
 	};
 }
 

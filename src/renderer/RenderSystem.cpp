@@ -1,6 +1,6 @@
-#include "Renderer.h"
+#include "RenderSystem.h"
 #include "DeviceContext.h"
-#include "RendererState.h"
+#include "RenderState.h"
 #include "VertexArrayObject.h"
 #include "VertexGpuBuffer.h"
 #include "IndexGpuBuffer.h"
@@ -8,18 +8,18 @@
 
 namespace aurora 
 {
-	Renderer::Renderer(const Config& config)
+	RenderSystem::RenderSystem(const Config& config)
 		:config_(config)
 	{
 
 	}
 
-	Renderer::~Renderer()
+	RenderSystem::~RenderSystem()
 	{
 
 	}
 
-	bool Renderer::Initialized()
+	bool RenderSystem::Initialized()
 	{
 		auto width = config_.GetInt("width");
 		auto height = config_.GetInt("height");
@@ -38,12 +38,12 @@ namespace aurora
 		return true;
 	}
 
-	void Renderer::Destory()
+	void RenderSystem::Destory()
 	{
 		
 	}
 
-	void Renderer::Render()
+	void RenderSystem::Render()
 	{
 		//
 		glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -55,14 +55,14 @@ namespace aurora
 		device_context_->PollEvents();
 	}
 
-	void Renderer::ChangeViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	void RenderSystem::ChangeViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
 	{
 		viewport_width_ = width;
 		viewport_height_ = height;
 		glViewport(0, 0, viewport_width_, viewport_height_);
 	}
 
-	void Renderer::_RenderOperation(const RenderOperation& ro)
+	void RenderSystem::_RenderOperation(const RenderOperation& ro)
 	{
 		ro.vao->Bind();
 		ro.vao->UpdateVertexAttrib();

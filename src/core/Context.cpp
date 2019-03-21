@@ -1,6 +1,6 @@
 #include "Context.h"
 #include "LogManager.h"
-#include "Renderer.h"
+#include "RenderSystem.h"
 
 namespace aurora
 {
@@ -22,10 +22,10 @@ namespace aurora
 			LOG_ERROR() << "aurora.config加载失败!" << LOG_END();
 		}
 
-		renderer_ = MakeRendererPtr(config_);
+		renderer_ = MakeRenderSystemPtr(config_);
 		if (!renderer_ || !renderer_->Initialized())
 		{
-			LOG_ERROR() << "Renderer初始化失败!" << LOG_END();
+			LOG_ERROR() << "RenderSystem初始化失败!" << LOG_END();
 		}
 
 		// 创建renerer

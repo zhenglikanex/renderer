@@ -1,3 +1,21 @@
+function UpdateScene()
+	for render in renders do
+		if(static_batched) then
+			counint;
+		end
+	
+		if render.is_static_batch then
+			batch_static = GetStaticBathRenderables(render.material)
+			batch_static.push()
+		end
+	
+	end
+end
+
+
+
+
+
 for obj in scene_objs do
 	
 end

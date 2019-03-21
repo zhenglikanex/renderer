@@ -22,10 +22,14 @@ namespace aurora
 
 		virtual ~IComponent() = 0;
 
+		virtual IComponentPtr Clone() = 0;
+		virtual void Copy(const IComponentPtr& component) = 0 {}
+
 		virtual void Start() {};
 		virtual void Update() {};
 		virtual void Dispose() {};
 
+		void AttackGameObject(const GameObjectPtr& game_object);
 		/*
 		 * 得到组件所属的对象;
 		 */
@@ -55,17 +59,8 @@ namespace aurora
 			return nullptr;
 		}
 
-		/*
-		 * 拷贝
-		 */
-		virtual ComponentID GetComponentId() = 0;
-
-	protected:
-		virtual void Copy(const IComponentPtr& component) = 0 {}
-	public:
-		void AttackGameObject(const GameObjectPtr& game_object);
-		virtual std::shared_ptr<IComponent> Clone() = 0;
-
+		ComponentID GetComponentId();
+	private:
 		GameObjectWeakPtr game_object_wake_ptr_;
 	};
 }

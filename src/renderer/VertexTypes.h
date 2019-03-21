@@ -29,22 +29,22 @@ namespace aurora
 		kPosition2D = MakeVertexAttribFormat<8, 2, GL_FLOAT, GL_FALSE>::Value,
 	};
 
-	GLuint AttribIndex(VertexAttribFormat format)
+	inline GLuint AttribIndex(VertexAttribFormat format)
 	{
 		return format >> 20 & 0xFFFF;
 	}
 
-	GLint AttribCompoentNum(VertexAttribFormat format)
+	inline GLint AttribCompoentNum(VertexAttribFormat format)
 	{
 		return format >> 17 & 7;
 	}
 
-	GLenum AttribType(VertexAttribFormat format)
+	inline GLenum AttribType(VertexAttribFormat format)
 	{
 		return format >> 1 & 0xFFFF;
 	}
 
-	GLboolean AttribNormalized(VertexAttribFormat format)
+	inline GLboolean AttribNormalized(VertexAttribFormat format)
 	{
 		return format & 1;
 	}
@@ -68,7 +68,7 @@ namespace aurora
 		kV_P3_N3_T2,
 	};
 
-	size_t VertexSize(VertexType type)
+	inline size_t VertexSize(VertexType type)
 	{
 		switch (type)
 		{
@@ -87,7 +87,7 @@ namespace aurora
 		k32Bit
 	};
 
-	size_t IndexSize(IndexType type)
+	inline size_t IndexSize(IndexType type)
 	{
 		switch (type)
 		{
@@ -98,6 +98,7 @@ namespace aurora
 		default:
 			break;
 		}
+		return 0;
 	}
 }
 

@@ -31,17 +31,17 @@ namespace aurora
 	using GLFW3WindowPtr = std::shared_ptr<GLFW3Window>;
 	MAKE_SHARED_PTR(GLFW3Window);
 
-	class Renderer;
-	using RendererPtr = std::shared_ptr<Renderer>;
-	MAKE_SHARED_PTR(Renderer);
+	class RenderSystem;
+	using RenderSystemPtr = std::shared_ptr<RenderSystem>;
+	MAKE_SHARED_PTR(RenderSystem);
 
 	class DeviceContext;
 	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
 	MAKE_SHARED_PTR(DeviceContext);
 
-	class RendererState;
-	using RendererStatePtr = std::shared_ptr<RendererState>;
-	MAKE_SHARED_PTR(RendererState);
+	class RenderState;
+	using RenderStatePtr = std::shared_ptr<RenderState>;
+	MAKE_SHARED_PTR(RenderState);
 
 	class Context;
 	using ContextPtr = std::shared_ptr<Context>;
