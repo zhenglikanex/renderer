@@ -106,3 +106,19 @@
 //		return std::static_pointer_cast<Mesh>(Resources::GetInstance()->LoadResource<Mesh>(res_load_desc));
 //	}
 //}
+
+#include "Resources.h"
+
+namespace aurora
+{
+	ResLoadDescPtr Resources::FindResLoadDesc(const std::string& name)
+	{
+		auto iter = name_by_desc_map_.find(name);
+		if (iter == name_by_desc_map_.end())
+		{
+			return nullptr;
+		}
+
+		return iter->second;
+	}
+}

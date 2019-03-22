@@ -1,6 +1,7 @@
 #ifndef RENDERER_H_
 #define RENDERER_H_
 
+#include "AuroraDef.h"
 #include "IComponent.h"
 
 namespace aurora
@@ -17,8 +18,11 @@ namespace aurora
 		void Start() override;
 		void Update() override;
 		void Dispose() override;
-	private:
 
+		void set_mesh(const MeshPtr& mesh) { mesh_ = mesh; }
+		const MeshPtr& mesh() const { return mesh_; }
+	private:
+		MeshPtr mesh_;
 	};
 }
 

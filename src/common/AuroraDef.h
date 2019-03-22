@@ -67,6 +67,11 @@ namespace aurora
 	using VertexArrayObjectPtr = std::shared_ptr<VertexArrayObject>;
 	MAKE_SHARED_PTR(VertexArrayObject);
 
+	class Renderable;
+	using RenderablePtr = std::shared_ptr<Renderable>;
+	using RenderableWeakPtr = std::weak_ptr<Renderable>;
+	MAKE_SHARED_PTR(Renderable);
+
 	class Mesh;
 	using MeshPtr = std::shared_ptr<Mesh>;
 	using MeshWeakPtr = std::weak_ptr<Mesh>;
@@ -176,6 +181,10 @@ namespace aurora
 	using PlanePtr = std::shared_ptr<Plane>;
 	using PlaneWeakPtr = std::weak_ptr<Plane>;
 	MAKE_SHARED_PTR(Plane);
+
+	class ResLoadDesc;
+	using ResLoadDescPtr = std::shared_ptr<ResLoadDesc>;
+	MAKE_SHARED_PTR(ResLoadDesc);
 }
 
 #endif

@@ -20,6 +20,8 @@ namespace aurora
 		Material(const ShaderPtr& shader);
 		~Material();
 
+		uint64_t Weight() { return 0; }
+
 		MaterialPtr Clone() const;
 
 		void AttachTexture(const std::string& name,const TexturePtr& texture);
