@@ -42,7 +42,11 @@ namespace aurora
 			return lhs.first->Weight() < rhs.first->Weight();
 		});
 
-		for()
+		// 对每个对象进行渲染
+		for (const auto& item : render_queue_)
+		{
+			item.second->Render();
+		}
 	}
 
 	void SceneManager::AddToRootNode(const GameObjectPtr& game_object)

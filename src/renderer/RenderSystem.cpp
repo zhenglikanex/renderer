@@ -30,7 +30,7 @@ namespace aurora
 			return true;
 		}
 
-		renderer_state_ = MakeRendererStatePtr();
+		renderer_state_ = MakeRenderStatePtr();
 
 		ChangeViewport(0,0,width, height);
 		glEnable(GL_DEPTH_TEST);
@@ -43,16 +43,22 @@ namespace aurora
 		
 	}
 
-	void RenderSystem::Render()
+	void RenderSystem::BeginRender()
 	{
 		//
 		glClearColor(0.0, 0.0, 0.0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+	}
 
+	void RenderSystem::EndRender()
+	{
 		device_context_->SwapBuffers();
-
 		device_context_->PollEvents();
+	}
+
+	void RenderSystem::Render(const MaterialPtr& material, const VertexArrayObjectPtr& vao)
+	{
+		
 	}
 
 	void RenderSystem::ChangeViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
@@ -60,26 +66,5 @@ namespace aurora
 		viewport_width_ = width;
 		viewport_height_ = height;
 		glViewport(0, 0, viewport_width_, viewport_height_);
-	}
-
-	void RenderSystem::_RenderOperation(const RenderOperation& ro)
-	{
-		ro.vao->Bind();
-		ro.vao->UpdateVertexAttrib();
-		if (ro.vao->IsUseIndex())
-		{
-			if (ro.vao->index_buffer()->index_type() == IndexType::k16Bit)
-			{
-				glDrawElements(ro.render_type, ro.vao->index_buffer()->index_count(), GL_UNSIGNED_SHORT, 0);
-			}
-			else 
-			{
-				glDrawElements(ro.render_type, ro.vao->index_buffer()->index_count(), GL_UNSIGNED_INT, 0);
-			}
-		}
-		else 
-		{
-			glDrawArrays(ro.render_type, 0, ro.vao->vertex_buffer()->vertex_count());
-		}
 	}
 }

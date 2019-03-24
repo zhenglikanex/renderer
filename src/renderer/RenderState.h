@@ -2,7 +2,9 @@
 #define RENDERSTATE_H_
 
 #include "glad/glad.h"
-
+#include "AuroraDef.h"
+#include "Material.h"
+#include <memory>
 #include <unordered_map>
 
 namespace aurora
@@ -46,9 +48,18 @@ namespace aurora
 				iter->second = id;
 			}
 		}
+
+		void BindMaterial(const MaterialPtr& material)
+		{
+			if (bind_material_ || bind_material_.get() != material.get())
+			{
+				bind_material_->Bind();
+			}
+		}
 	private:
 		GLuint bind_vao_;
 		BindBufferMap bind_buffer_map_;
+		MaterialPtr bind_material_;
 	};
 }
 

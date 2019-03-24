@@ -6,31 +6,10 @@
 
 namespace aurora
 {
-	VertexAttrib::VertexAttrib(VertexAttribFormat format, size_t offset)
-		:format_(format)
-		,offset_(offset)
+	VertexArrayObject::VertexArrayObject()
+		:need_update_vertex_stream_(false)
 	{
-		index_ = AttribIndex(format_);
-		component_num_ = AttribCompoentNum(format_);
-		type_ = AttribType(format_);
-		normalized_ = AttribNormalized(format_);
-	}
 
-	VertexArrayObject::VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* data)
-		: use_index_(false)
-		, vertex_buffer_(MakeVertexGpuBufferPtr(vertex_type,vertex_count,data))
-		, update_attrib_(false)
-	{
-		CHECK_GL_ERROR(glGenVertexArrays(1, &id_));
-	}
-
-	VertexArrayObject::VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* vertex_data,IndexType index_type,uint32_t index_count,const void* index_data)
-		: use_index_(true)
-		, vertex_buffer_(MakeVertexGpuBufferPtr(vertex_type, vertex_count,vertex_data))
-		, index_buffer_(MakeIndexGpuBufferPtr(index_type,index_count,index_data))
-		, update_attrib_(false)
-	{
-		CHECK_GL_ERROR(glGenVertexArrays(1, &id_));
 	}
 
 	VertexArrayObject::~VertexArrayObject()
@@ -48,34 +27,37 @@ namespace aurora
 		renderer_->renderer_state()->BindVAO(0);
 	}
 
-	void VertexArrayObject::BindVertexAttrib(VertexAttribFormat format,size_t offset)
-	{
-		auto iter = attrib_map_.find(format);
-		if (iter != attrib_map_.end())
-		{
-			return;
-		}
-
-		update_attrib_ = true;
-		attrib_map_.insert(std::make_pair(format, VertexAttrib(format, offset)));
-	}
-
 	void VertexArrayObject::UpdateVertexAttrib()
 	{
-		if (update_attrib_)
+		if (need_update_vertex_stream_)
 		{
 			Bind();
 			
-			vertex_buffer_->Bind();
-			if (use_index_) index_buffer_->Bind();
-
-			for (auto & entry : attrib_map_)
+			if (vertex_stream_.attribs.size() > 0 && vertex_stream_.vertex_buffer)
 			{
-				auto attrib = entry.second;
-			 	CHECK_GL_ERROR(glVertexAttribPointer(attrib.inex(), attrib.component_num(), attrib.type(), attrib.normalized(), vertex_buffer_->vertex_size(), (void*)attrib.offfset()));
+				vertex_stream_.vertex_buffer->Bind();
+
+				for (auto attrib : vertex_stream_.attribs)
+				{
+					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized,vertex_stream_.vertex_buffer->vertex_size(),(void*)attrib.offset));
+				}
 			}
 
-			update_attrib_ = false;
+			if (instance_stream_.attribs.size() > 0 && instance_stream_.instance_buffer)
+			{
+				instance_stream_.instance_buffer->Bind();
+				for (auto attrib : instance_stream_.attribs)
+				{
+					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized, instance_stream_.size, (void*)attrib.offset));
+				}
+			}
+
+			if (index_buffer_)
+			{
+				index_buffer_->Bind();
+			}
+
+			need_update_vertex_stream_ = false;
 		}
 	}
 }

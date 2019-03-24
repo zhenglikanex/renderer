@@ -10,51 +10,65 @@
 
 namespace aurora
 {
-	class VertexAttrib
-	{
-	public:
-		VertexAttrib(VertexAttribFormat format,size_t offset);
-		
-		VertexAttribFormat format() const { return format_; }
-		GLuint inex() const { return format_; }
-		GLuint component_num() const { return component_num_; }
-		GLenum type() const { return type_; }
-		GLboolean normalized() const { return normalized_; }
-		size_t offfset() const { return offset_; }
-	private:
-		VertexAttribFormat format_;
-		GLuint index_;
-		GLint component_num_;
-		GLenum type_;
-		GLboolean normalized_;
-		size_t offset_;
-	};
+	
+
 	class VertexArrayObject : public Noncopyable
 	{
 	public:
-		VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* data);
-		VertexArrayObject(VertexType vertex_type, uint32_t vertex_count,const void* vertex_data,IndexType index_type,uint32_t index_count,const void* index_data);
+		struct Attrib
+		{
+			GLuint index;
+			GLint component_num;
+			GLenum type;
+			GLboolean normalized;
+			size_t offset;
+		};
+
+		struct VertexStream
+		{
+			std::vector<Attrib> attribs;
+			VertexGpuBufferPtr vertex_buffer;
+		};
+
+		struct InstanceStream
+		{
+			std::vector<Attrib> attribs;
+			GpuBufferPtr instance_buffer;
+			uint32_t size;
+		};
+	public:
+
+
+		VertexArrayObject();
 		~VertexArrayObject();
 
 		void Bind();
 		void UnBind();
 
-		void BindVertexAttrib(VertexAttribFormat format,size_t offset);
 		void UpdateVertexAttrib();
-	
+
 		GLuint id() const { return id_; }
-		bool IsUseIndex() const { return use_index_; }
-		const VertexGpuBufferPtr& vertex_buffer() const { return vertex_buffer_; }
+		
+		void set_vertex_stream(const VertexStream& vertex_stream) 
+		{ 
+			vertex_stream_ = vertex_stream; 
+			need_update_vertex_stream_ = true;
+		}
+		const VertexStream& vertex_stream() const { return vertex_stream_; }
+
+		void set_instance_stream(const InstanceStream& instance_stream) { instance_stream_ = instance_stream_; }
+		const InstanceStream& instance_stream() const { return instance_stream_; }
+
+		void set_index_buffer(const IndexGpuBufferPtr& index_buffer) { index_buffer_ = index_buffer; }
 		const IndexGpuBufferPtr& index_buffer() const { return index_buffer_; }
 	private:
 		RenderSystemPtr renderer_;
 
 		GLuint id_;
-		bool use_index_;
-		VertexGpuBufferPtr vertex_buffer_;
+		VertexStream vertex_stream_;
+		InstanceStream instance_stream_;
 		IndexGpuBufferPtr index_buffer_;
-		std::unordered_map<VertexAttribFormat, VertexAttrib> attrib_map_;
-		bool update_attrib_;
+		bool need_update_vertex_stream_;
 	};
 }
 

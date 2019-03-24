@@ -5,8 +5,9 @@
 
 namespace aurora
 {
+
 	GpuBuffer::GpuBuffer(GLenum target, GLsizeiptr size, GLenum usage, const void* data /* = nullptr */)
-		: renderer_(Context::GetInstance()->renderer())
+		: renderer_(Context::GetInstance()->render_system())
 		, target_(target)
 		, size_(size)
 		, usage_(usage)
@@ -33,6 +34,14 @@ namespace aurora
 		renderer_->renderer_state()->BindBuffer(target_, 0);
 	}
 
+	void GpuBuffer::Resize(GLsizeiptr size)
+	{
+		if (size_ == size)
+		{
+			glBufferData(target_, size_, nullptr, usage_);
+		}
+	}
+
 	void GpuBuffer::ReadBuffer(GLintptr offset, GLsizeiptr size, void* data)
 	{
 		Bind();
@@ -40,7 +49,7 @@ namespace aurora
 		CHECK_GL_ERROR(glGetBufferSubData(target_, offset, size, data));
 	}
 
-	void GpuBuffer::WirteBuffer(GLintptr offset, GLsizeiptr size,const void* data)
+	void GpuBuffer::WriteBuffer(GLintptr offset, GLsizeiptr size,const void* data)
 	{
 		Bind();
 

@@ -15,10 +15,10 @@ namespace aurora
 
 		bool Initialized();
 		void Destory();
-
-		void Render();
-
-
+		
+		void BeginRender();
+		void EndRender();
+		void Render(const MaterialPtr& material,const VertexArrayObjectPtr& vao);
 		void ChangeViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 
 		uint32_t viewport_width() const { return viewport_width_; }
@@ -26,9 +26,6 @@ namespace aurora
 		const DeviceContextPtr& device_context() { return device_context_; }
 		const RenderStatePtr& renderer_state() { return renderer_state_; }
 	private:
-		void _RenderOperation(const RenderOperation& ro);
-	private:
-
 		Config config_;
 		uint32_t viewport_width_;
 		uint32_t viewport_height_;

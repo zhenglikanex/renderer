@@ -11,8 +11,12 @@ namespace aurora
 		Renderable();
 		virtual ~Renderable() = 0;
 
+		virtual void BeginRender();
+
 		// œÚRenderSystemÃ·Ωª‰÷»æ
 		virtual void Render();
+
+		virtual void EndRender();
 
 		void ClearInstance();
 		void AddInstance(const GameObjectPtr& go);
