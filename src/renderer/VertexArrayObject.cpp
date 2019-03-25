@@ -27,7 +27,7 @@ namespace aurora
 		renderer_->renderer_state()->BindVAO(0);
 	}
 
-	void VertexArrayObject::UpdateVertexAttrib()
+	void VertexArrayObject::UpdateVaoToShader()
 	{
 		if (need_update_vertex_stream_)
 		{
@@ -40,6 +40,7 @@ namespace aurora
 				for (auto attrib : vertex_stream_.attribs)
 				{
 					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized,vertex_stream_.vertex_buffer->vertex_size(),(void*)attrib.offset));
+					glEnableVertexAttribArray(attrib.index);
 				}
 			}
 
@@ -49,6 +50,7 @@ namespace aurora
 				for (auto attrib : instance_stream_.attribs)
 				{
 					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized, instance_stream_.size, (void*)attrib.offset));
+					glEnableVertexAttribArray(attrib.index);
 				}
 			}
 

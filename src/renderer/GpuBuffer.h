@@ -27,7 +27,7 @@ namespace aurora
 			~Mapper()
 			{
 				buffer_->Bind();
-				glUnmapBuffer(buffer_->target());
+				CHECK_GL_ERROR(glUnmapBuffer(buffer_->target()));
 			}
 
 			void FlushRangeBuffer(GLintptr offset, GLsizeiptr size)
@@ -36,8 +36,11 @@ namespace aurora
 				CHECK_GL_ERROR(glFlushMappedBufferRange(buffer_->target(), offset, size));
 			}
 
-			void* get() { return data_; }
-
+			template<typename T>
+			T* Pointer()
+			{
+				return (T*)data_;
+			}
 		private:
 			GpuBufferPtr buffer_;
 			GLintptr offset_;

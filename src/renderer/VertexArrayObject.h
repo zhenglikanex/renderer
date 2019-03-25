@@ -10,8 +10,6 @@
 
 namespace aurora
 {
-	
-
 	class VertexArrayObject : public Noncopyable
 	{
 	public:
@@ -37,19 +35,17 @@ namespace aurora
 			uint32_t size;
 		};
 	public:
-
-
 		VertexArrayObject();
 		~VertexArrayObject();
 
 		void Bind();
 		void UnBind();
 
-		void UpdateVertexAttrib();
+		void UpdateVaoToShader();
 
 		GLuint id() const { return id_; }
 		
-		void set_vertex_stream(const VertexStream& vertex_stream) 
+		void set_vertex_stream(const VertexStream& vertex_stream)
 		{ 
 			vertex_stream_ = vertex_stream; 
 			need_update_vertex_stream_ = true;

@@ -34,7 +34,6 @@ namespace aurora
 		bool active_;
 		VertexArrayObjectPtr vao_;
 		MaterialPtr material_;
-		GpuBufferPtr instance_buffer_;
 		std::vector<GameObjectPtr> instances_;
 	};
 }

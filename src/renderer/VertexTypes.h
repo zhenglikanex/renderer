@@ -9,45 +9,15 @@
 
 namespace aurora
 {
-	template<GLuint Index, GLint Num, GLenum Type, GLboolean Normalized>
-	class MakeVertexAttribFormat
-	{
-	public:
-		static const uint32_t Value = Index << 20 | Num << 17 | Type << 1 | Normalized;
-	};
 
 	enum VertexAttribFormat : uint32_t
 	{
-		kPosition = MakeVertexAttribFormat<0, 3, GL_FLOAT, GL_FALSE>::Value,
-		kNoraml = MakeVertexAttribFormat<1, 3, GL_FLOAT, GL_FALSE>::Value,
-		kTexCoords0 = MakeVertexAttribFormat<2, 2, GL_FLOAT, GL_FALSE>::Value,
-		kTexCoords1 = MakeVertexAttribFormat<3, 2, GL_FLOAT, GL_FALSE>::Value,
-		kTexCoords2 = MakeVertexAttribFormat<4, 2, GL_FLOAT, GL_FALSE>::Value,
-		kTexCoords3 = MakeVertexAttribFormat<5, 2, GL_FLOAT, GL_FALSE>::Value,
-		kTangent = MakeVertexAttribFormat<6, 3, GL_FLOAT, GL_FALSE>::Value,
-		kBitangent = MakeVertexAttribFormat<7, 3, GL_FLOAT, GL_FALSE>::Value,
-		kPosition2D = MakeVertexAttribFormat<8, 2, GL_FLOAT, GL_FALSE>::Value,
+		kPosition = 0, 
+		kNoraml,
+		kTexCoords,
+		kTangent,
+		kBitangent,
 	};
-
-	inline GLuint AttribIndex(VertexAttribFormat format)
-	{
-		return format >> 20 & 0xFFFF;
-	}
-
-	inline GLint AttribCompoentNum(VertexAttribFormat format)
-	{
-		return format >> 17 & 7;
-	}
-
-	inline GLenum AttribType(VertexAttribFormat format)
-	{
-		return format >> 1 & 0xFFFF;
-	}
-
-	inline GLboolean AttribNormalized(VertexAttribFormat format)
-	{
-		return format & 1;
-	}
 
 	struct V_P2_T2
 	{

@@ -17,8 +17,8 @@ namespace aurora
 
 		GLuint id() const { gpu_buffer_.id(); }
 		uint32_t vertex_type() const { return vertex_type_; }
-		uint32_t vertex_num() const { return vertex_size_; }
-		uint32_t vertex_count() const { return vertex_num_; }
+		uint32_t vertex_size() const { return vertex_size_; }
+		uint32_t vertex_num() const { return vertex_num_; }
 	private:
 		VertexType vertex_type_;
 		uint32_t vertex_size_;

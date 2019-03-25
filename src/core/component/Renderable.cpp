@@ -13,7 +13,6 @@
 namespace aurora
 {
 	Renderable::Renderable()
-		:instance_buffer_(MakeGpuBufferPtr())
 	{
 		
 	}
@@ -26,20 +25,23 @@ namespace aurora
 	void Renderable::BeginRender()
 	{
 		GLsizeiptr size = instances_.size() * sizeof(glm::mat4);
-		if (instance_buffer_ == nullptr)
+
+		auto instance_stream = vao_->instance_stream();
+		if (!instance_stream.instance_buffer)
 		{
-			instance_buffer_ = MakeGpuBufferPtr(GL_ARRAY_BUFFER, size, GL_DYNAMIC_DRAW);
+			instance_stream.instance_buffer = MakeGpuBufferPtr(GL_ARRAY_BUFFER, size, GL_DYNAMIC_DRAW,nullptr);
 		}
-		else
-		{
-			instance_buffer_->Resize(size);
-		}
+		instance_stream.attribs.clear();
 
 		{
-			
+			auto mapper = GpuBuffer::Mapper(instance_stream.instance_buffer, 0, size, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
+			auto pointer = mapper.Pointer<glm::mat4>();
+			for (auto& instance : instances_)
+			{
+				
+				++pointer;
+			}
 		}
-
-		vao_->Bind();
 	}
 
 	void Renderable::Render()
