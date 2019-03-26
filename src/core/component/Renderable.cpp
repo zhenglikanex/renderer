@@ -38,9 +38,12 @@ namespace aurora
 			auto pointer = mapper.Pointer<glm::mat4>();
 			for (auto& instance : instances_)
 			{
-				
+				auto model_matrix = instance->GetComponent<SceneNode>()->GetWorldMatrix();
+				memcpy(pointer, &model_matrix, sizeof(glm::mat4));
 				++pointer;
 			}
+			
+			
 		}
 	}
 

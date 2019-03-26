@@ -35,6 +35,7 @@ namespace aurora
 		std::vector<SceneNodePtr> GetChildren() const;
 
 		glm::mat4 GetWorldMatrix();
+		glm::mat3 GetNormalMatrix();
 
 		void set_position(const glm::vec3& position)
 		{
@@ -56,7 +57,7 @@ namespace aurora
 			}
 			
 			need_update_matrix_ = true;
-			UpdateTransformMatrix();
+			UpdateModelMatrix();
 		}
 		const glm::vec3& position() const
 		{
@@ -82,7 +83,7 @@ namespace aurora
 			}
 
 			need_update_matrix_ = true;
-			UpdateTransformMatrix();
+			UpdateModelMatrix();
 		}
 		const glm::vec3& local_position() const { return local_position_; }
 
@@ -96,7 +97,7 @@ namespace aurora
 			scale_ = scale; 
 
 			need_update_matrix_ = true;
-			UpdateTransformMatrix();
+			UpdateModelMatrix();
 		}
 		const glm::vec3& scale() const { return scale_; }
 		
@@ -110,20 +111,21 @@ namespace aurora
 			rotate_ = rotate;
 
 			need_update_matrix_ = true;
-			UpdateTransformMatrix();
+			UpdateModelMatrix();
 		}
 		const glm::vec3& rotate() const { return rotate_; }
 
-		const glm::mat4x4& transform_matrix() const { return transform_matrix_; }
+		const glm::mat4& model_matrix() const { return model_matrix_; }
+		
 	private:
-		void UpdateTransformMatrix();
+		void UpdateModelMatrix();
 	private:
 		glm::vec3 position_;
 		glm::vec3 local_position_;
 		glm::vec3 scale_;
 		glm::vec3 rotate_;
 		bool need_update_matrix_;
-		glm::mat4x4 transform_matrix_;
+		glm::mat4 model_matrix_;
 		GameObjectWeakPtr parent_;
 		std::vector<GameObjectPtr> children_;
 	};

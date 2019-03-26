@@ -51,12 +51,8 @@ namespace aurora
 		}
 	}
 
-	enum InstanceType
-	{
-		kModelMatrix,
-		kNormalMatrix,
-	};
 
+	
 	enum IndexType
 	{
 		k16Bit,

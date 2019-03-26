@@ -140,24 +140,29 @@ namespace aurora
 		auto parent = GetParent();
 		if (parent)
 		{
-			return parent->transform_matrix() * transform_matrix_;
+			return parent->GetWorldMatrix() * model_matrix_;
 		}
 		else
 		{
-			return glm::identity<glm::mat4>() * transform_matrix_;
+			return model_matrix_;
 		}
 	}
 
-	void SceneNode::UpdateTransformMatrix()
+	glm::mat3 SceneNode::GetNormalMatrix()
+	{
+		return glm::mat3(glm::inverse(GetWorldMatrix()));
+	}
+
+	void SceneNode::UpdateModelMatrix()
 	{
 		if (need_update_matrix_)
 		{
 			
-			transform_matrix_ = glm::translate(glm::identity<glm::mat4>(), local_position_);
-			transform_matrix_ = glm::rotate(transform_matrix_, glm::radians(rotate_.x), glm::vec3(1, 0, 0));
-			transform_matrix_ = glm::rotate(transform_matrix_, glm::radians(rotate_.y), glm::vec3(0, 1, 0));
-			transform_matrix_ = glm::rotate(transform_matrix_, glm::radians(rotate_.z), glm::vec3(0, 0, 1));
-			transform_matrix_ = glm::scale(transform_matrix_, scale_);
+			model_matrix_ = glm::translate(glm::identity<glm::mat4>(), local_position_);
+			model_matrix_ = glm::rotate(model_matrix_, glm::radians(rotate_.x), glm::vec3(1, 0, 0));
+			model_matrix_ = glm::rotate(model_matrix_, glm::radians(rotate_.y), glm::vec3(0, 1, 0));
+			model_matrix_ = glm::rotate(model_matrix_, glm::radians(rotate_.z), glm::vec3(0, 0, 1));
+			model_matrix_ = glm::scale(model_matrix_, scale_);
 
 			need_update_matrix_ = false;
 		}
