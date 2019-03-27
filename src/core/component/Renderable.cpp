@@ -35,16 +35,19 @@ namespace aurora
 
 		{
 			auto mapper = GpuBuffer::Mapper(instance_stream.instance_buffer, 0, size, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
-			auto pointer = mapper.Pointer<glm::mat4>();
+			auto pointer = mapper.Pointer<InstanceData>();
 			for (auto& instance : instances_)
 			{
 				auto model_matrix = instance->GetComponent<SceneNode>()->GetWorldMatrix();
-				memcpy(pointer, &model_matrix, sizeof(glm::mat4));
+				auto normal_matrix = instance->GetComponent<SceneNode>()->GetNormalMatrix();
+
+				memcpy(pointer, &model_matrix, sizeof(model_matrix));
+				memcpy(pointer + offsetof(InstanceData, model_matrix), &normal_matrix, sizeof(normal_matrix));
 				++pointer;
 			}
-			
-			
 		}
+
+		instance_stream.attribs.push_back()
 	}
 
 	void Renderable::Render()

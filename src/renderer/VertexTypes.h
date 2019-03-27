@@ -51,8 +51,12 @@ namespace aurora
 		}
 	}
 
+	struct InstanceData
+	{
+		glm::mat4 model_matrix;
+		glm::mat3 normal_matrix;
+	};
 
-	
 	enum IndexType
 	{
 		k16Bit,
