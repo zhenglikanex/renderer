@@ -51,6 +51,7 @@ namespace aurora
 				{
 					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized, instance_stream_.size, (void*)attrib.offset));
 					glEnableVertexAttribArray(attrib.index);
+					glVertexAttribDivisor(attrib.index, 1);
 				}
 			}
 

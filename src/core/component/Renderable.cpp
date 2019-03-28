@@ -47,16 +47,22 @@ namespace aurora
 			}
 		}
 
-		instance_stream.attribs.push_back()
+		for (uint32_t index = 0; index <= 4; ++index)
+		{
+			instance_stream.attribs.emplace_back(VertexAttribIndex::kInstanceModelMatrix1 + index, 4, GL_FLOAT, GL_FALSE,sizeof(glm::vec4) * index);
+		}
+		for (uint32_t index = 0; index <= 3; ++index)
+		{
+			instance_stream.attribs.emplace_back(VertexAttribIndex::kInstanceNormalMatrix1 + index, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec4) + sizeof(glm::vec3) * index);
+		}
+		instance_stream.size = sizeof(InstanceData);
+
+
 	}
 
 	void Renderable::Render()
 	{
-		BeginRender();
-
 		Context::GetInstance()->render_system()->Render(material_,vao_);
-
-		EndRender();
 	}
 
 	void Renderable::EndRender()

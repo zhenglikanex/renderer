@@ -10,13 +10,21 @@
 namespace aurora
 {
 
-	enum VertexAttribFormat : uint32_t
+	enum VertexAttribIndex
 	{
 		kPosition = 0, 
 		kNoraml,
 		kTexCoords,
 		kTangent,
 		kBitangent,
+
+		kInstanceModelMatrix1 = 9,
+		kInstanceModelMatrix2 = 10,
+		kInstanceModelMatrix3 = 11,
+		kInstanceModelMatrix4 = 12,
+		kInstanceNormalMatrix1 = 13,
+		kInstanceNormalMatrix2 = 14,
+		kInstanceNoramlMatrix3 = 15,
 	};
 
 	struct V_P2_T2
@@ -29,7 +37,7 @@ namespace aurora
 	{
 		glm::vec3 position;
 		glm::vec3 normal;
-		glm::vec2 texcoord;
+		glm::vec2 texcoords;
 	};
 
 	enum VertexType
