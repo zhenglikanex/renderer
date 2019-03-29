@@ -57,7 +57,7 @@ namespace aurora
 		}
 		instance_stream.size = sizeof(InstanceData);
 
-
+		
 	}
 
 	void Renderable::Render()

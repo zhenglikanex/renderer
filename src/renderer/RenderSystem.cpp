@@ -56,7 +56,7 @@ namespace aurora
 		device_context_->PollEvents();
 	}
 
-	void RenderSystem::Render(const MaterialPtr& material, const VertexArrayObjectPtr& vao)
+	void RenderSystem::Render(GLenum render_mode,const MaterialPtr& material, const VertexArrayObjectPtr& vao)
 	{
 		
 	}

@@ -30,11 +30,15 @@ namespace aurora
 
 		void set_material(const MaterialPtr& material) { material_ = material; }
 		const MaterialPtr& material() const { return material_; }
+
+		void set_render_mode(GLenum render_mode);
+		GLenum render_mode() const { return render_mode_; }
 	private:
 		bool active_;
 		VertexArrayObjectPtr vao_;
 		MaterialPtr material_;
 		std::vector<GameObjectPtr> instances_;
+		GLenum render_mode_;
 	};
 }
 

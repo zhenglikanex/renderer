@@ -19,7 +19,7 @@ namespace aurora
 		std::shared_ptr<void> Create() override;
 		Texture2DPtr GetTexture(aiMaterial *mat, aiTextureType type);
 		MaterialPtr ProcessMaterail(aiMaterial *mat);
-		SubMeshPtr ProcessSubMesh(const MeshPtr& mesh_ptr, aiMesh * ai_mesh, const aiScene *scene);
+		SubMeshPtr ProcessSubMesh(aiMesh * ai_mesh, const aiScene *scene);
 		void ProcessNode(const MeshPtr& mesh_ptr, aiNode* node, const aiScene* scene);
 	private:
 		std::string directory_;

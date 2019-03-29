@@ -6,16 +6,12 @@
 
 namespace aurora
 {
-	class VertexGpuBuffer
+	class VertexGpuBuffer : public GpuBuffer
 	{
 	public:
 		VertexGpuBuffer(VertexType vertex_type,uint32_t vertex_num,const void* data);
 		~VertexGpuBuffer();
 
-		void Bind();
-		void UnBind();
-
-		GLuint id() const { gpu_buffer_.id(); }
 		uint32_t vertex_type() const { return vertex_type_; }
 		uint32_t vertex_size() const { return vertex_size_; }
 		uint32_t vertex_num() const { return vertex_num_; }
@@ -23,7 +19,6 @@ namespace aurora
 		VertexType vertex_type_;
 		uint32_t vertex_size_;
 		uint32_t vertex_num_;
-		GpuBuffer gpu_buffer_;
 	};
 }
 

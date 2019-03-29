@@ -2,9 +2,14 @@
 
 #include "Mesh.h"
 #include "SubMesh.h"
+#include "GpuBuffer.h"
+#include "VertexGpuBuffer.h"
+#include "IndexGpuBuffer.h"
 #include "VertexTypes.h"
 #include "VertexArrayObject.h"
 #include "FileHelper.h"
+
+#include <numeric>
 
 #include "glm/glm.hpp"
 
@@ -48,37 +53,74 @@ namespace aurora
 		return nullptr;
 	}
 
-	SubMeshPtr MeshLoadDesc::ProcessSubMesh(const MeshPtr& mesh_ptr, aiMesh * ai_mesh, const aiScene *scene)
+	SubMeshPtr MeshLoadDesc::ProcessSubMesh(aiMesh * ai_mesh, const aiScene *scene)
 	{
-		auto submesh = MakeSubMeshPtr();
-		auto vao = MakeVertexArrayObjectPtr();
-
-		auto vertex_buffer = MakeVertexGpuBufferPtr(sizeof(V_P3_N3_T2);
-
-
-		V_P3_N3_T2 vertex;
-		for (unsigned int i = 0; i < ai_mesh->mNumVertices; i++)
+		VertexArrayObject::VertexStream stream;
+		stream.vertex_buffer = MakeVertexGpuBufferPtr(sizeof(V_P3_N3_T2), ai_mesh->mNumVertices, nullptr);
+		stream.attribs.emplace_back(VertexAttribIndex::kPosition,	3, GL_FLOAT, GL_FALSE, offsetof(V_P3_N3_T2, position));
+		stream.attribs.emplace_back(VertexAttribIndex::kNoraml,		3, GL_FLOAT, GL_FALSE, offsetof(V_P3_N3_T2, normal));
+		stream.attribs.emplace_back(VertexAttribIndex::kTexCoords,	2, GL_FLOAT, GL_FALSE, offsetof(V_P3_N3_T2, texcoords));
 		{
-			vertex.position = glm::vec3(ai_mesh->mVertices[i].x, ai_mesh->mVertices[i].y, ai_mesh->mVertices[i].z);
-			vertex.normal = glm::vec3(ai_mesh->mNormals[i].x, ai_mesh->mNormals[i].y, ai_mesh->mNormals[i].z);
-			vertex.texcoords = glm::vec2(ai_mesh->mTextureCoords[0][i].x, ai_mesh->mTextureCoords[0][i].y);
-			//vertex.tangent = glm::vec3(ai_mesh->mTangents[i].x, ai_mesh->mTangents[i].y, ai_mesh->mTangents[i].z);
-			//vertex.bitangent = glm::vec3(ai_mesh->mBitangents[i].x, ai_mesh->mBitangents[i].y, ai_mesh->mBitangents[i].z);
+			GpuBuffer::Mapper mapper(stream.vertex_buffer,0, stream.vertex_buffer->size(),GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT);
+			auto pointer = mapper.Pointer<V_P3_N3_T2>();
 
-			
+			V_P3_N3_T2 vertex;
+			for (unsigned int i = 0; i < ai_mesh->mNumVertices; i++)
+			{
+				vertex.position = glm::vec3(ai_mesh->mVertices[i].x, ai_mesh->mVertices[i].y, ai_mesh->mVertices[i].z);
+				vertex.normal = glm::vec3(ai_mesh->mNormals[i].x, ai_mesh->mNormals[i].y, ai_mesh->mNormals[i].z);
+				vertex.texcoords = glm::vec2(ai_mesh->mTextureCoords[0][i].x, ai_mesh->mTextureCoords[0][i].y);
+				//vertex.tangent = glm::vec3(ai_mesh->mTangents[i].x, ai_mesh->mTangents[i].y, ai_mesh->mTangents[i].z);
+				//vertex.bitangent = glm::vec3(ai_mesh->mBitangents[i].x, ai_mesh->mBitangents[i].y, ai_mesh->mBitangents[i].z);
+				memcpy(pointer, &vertex, sizeof(vertex));
+				++pointer;
+			}
 		}
+		
+		// 如果顶点个数超过2^16使用32bit
+		auto index_type = ai_mesh->mNumVertices > std::numeric_limits<uint16_t>::max() ? IndexType::k32Bit : IndexType::k16Bit;
+		auto index_buffer = MakeIndexGpuBufferPtr(index_type, ai_mesh->mNumFaces * 3,nullptr);
+		{
+			//现在通过每个网格的面（一个面是一个网格它的三角形）并检索相应的顶点索引
 
-		//现在通过每个网格的面（一个面是一个网格它的三角形）并检索相应的顶点索引
-		for (uint32_t i = 0; i < ai_mesh->mNumFaces; ++i) {
-			aiFace face = ai_mesh->mFaces[i];
-			for (uint32_t j = 0; j < face.mNumIndices; j++) {
-				indexs.push_back(face.mIndices[j]);
+			GpuBuffer::Mapper mapper(index_buffer, 0, index_buffer->size(), GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT);
+			if (index_type == IndexType::k16Bit)
+			{
+				auto pointer = mapper.Pointer<uint16_t>();
+				for (uint32_t i = 0; i < ai_mesh->mNumFaces; ++i)
+				{
+					aiFace face = ai_mesh->mFaces[i];
+					for (uint32_t j = 0; j < face.mNumIndices; ++j)
+					{
+						uint16_t index = face.mIndices[j];
+						memcpy(pointer, &index,sizeof(index));
+						++pointer;
+					}
+				}
+			}
+			else
+			{
+				auto pointer = mapper.Pointer<uint32_t>();
+				for (uint32_t i = 0; i < ai_mesh->mNumFaces; ++i)
+				{
+					aiFace face = ai_mesh->mFaces[i];
+					for (uint32_t j = 0; j < face.mNumIndices; ++j)
+					{
+						memcpy(pointer, &face.mIndices[j], sizeof(face.mIndices[j]));
+						++pointer;
+					}
+				}
 			}
 		}
 
-		auto submesh = 
+		auto vao = MakeVertexArrayObjectPtr();
+		vao->set_vertex_stream(stream);
+		vao->set_index_buffer(index_buffer);
 
-		return submesh_ptr;
+		auto submesh = MakeSubMeshPtr();
+		submesh->set_vao(vao);
+
+		return submesh;
 	}
 
 	void MeshLoadDesc::ProcessNode(const MeshPtr& mesh, aiNode* node, const aiScene* scene)
@@ -86,7 +128,7 @@ namespace aurora
 		for (uint32_t i = 0; i < node->mNumMeshes; ++i)
 		{
 			aiMesh* ai_mesh = scene->mMeshes[node->mMeshes[i]];
-			mesh->AddSubMesh(ProcessSubMesh(mesh, ai_mesh, scene));
+			mesh->AddSubMesh(ProcessSubMesh(ai_mesh, scene));
 		}
 
 		for (uint32_t i = 0; i < node->mNumChildren; ++i)
