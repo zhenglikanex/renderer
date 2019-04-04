@@ -12,8 +12,15 @@
 
 namespace aurora
 {
-	class Shader
+	struct ShaderUniform
 	{
+		static const std::string ProjMatrix;
+		static const std::string ViewMatrix;
+		static const std::string ModelMatrix;
+	};
+
+	class Shader
+	{	
 	public:
 		// TODO:考虑是否应该把文件读取编译部分代码移到外面
 		Shader(const std::string& vs_file,const std::string& fs_file);

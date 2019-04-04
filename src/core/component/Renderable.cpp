@@ -3,10 +3,14 @@
 #include "RenderSystem.h"
 #include "GpuBuffer.h"
 #include "VertexArrayObject.h"
+#include "Material.h"
+#include "Shader.h"
 #include "GameObject.h"
 #include "SceneNode.h"
 #include "Context.h"
-#include "Material.h"
+#include "SceneManager.h"
+#include "Camera.h"
+
 
 #include "glm/glm.hpp"
 
@@ -57,12 +61,17 @@ namespace aurora
 		}
 		instance_stream.size = sizeof(InstanceData);
 
-		
+
+		auto camera = Context::GetInstance()->scene_manager()->cur_camera();
+
+		auto shader = material_->shader();
+		shader->Commit
+		shader->CommitMat4(ShaderUniform::ViewMatrix, camera->GetViewMatrix());
 	}
 
 	void Renderable::Render()
 	{
-		Context::GetInstance()->render_system()->Render(material_,vao_);
+		Context::GetInstance()->render_system()->Render(material_,render_mode_,vao_,instances_.size());
 	}
 
 	void Renderable::EndRender()

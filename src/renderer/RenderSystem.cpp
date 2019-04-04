@@ -56,9 +56,45 @@ namespace aurora
 		device_context_->PollEvents();
 	}
 
-	void RenderSystem::Render(GLenum render_mode,const MaterialPtr& material, const VertexArrayObjectPtr& vao)
+	void RenderSystem::Render(const MaterialPtr& material, GLenum render_mode, const VertexArrayObjectPtr& vao, GLsizei instance_num)
 	{
-		
+		material->Bind();
+		if (vao->index_buffer())
+		{
+			if (vao->instance_stream().instance_buffer)
+			{
+				if (vao->index_buffer()->index_type() == IndexType::k16Bit)
+				{
+					glDrawElementsInstanced(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_SHORT, 0, instance_num);
+				}
+				else
+				{
+					glDrawElementsInstanced(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_INT, 0, instance_num);
+				}
+			}
+			else
+			{
+				if (vao->index_buffer()->index_type() == IndexType::k16Bit)
+				{
+					glDrawElements(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_SHORT, 0);
+				}
+				else
+				{
+					glDrawElements(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_INT, 0);
+				}
+			}
+		}
+		else
+		{
+			if (vao->instance_stream().instance_buffer)
+			{
+				glDrawArraysInstanced(render_mode, 0, vao->vertex_stream().vertex_buffer->vertex_num(), instance_num);
+			}
+			else
+			{
+				glDrawArrays(render_mode, 0, vao->vertex_stream().vertex_buffer->vertex_num());
+			}
+		}
 	}
 
 	void RenderSystem::ChangeViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)

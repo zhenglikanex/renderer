@@ -38,6 +38,7 @@ namespace aurora
 		void AddRenderQuene(const RenderablePtr& renderable);
 
 		const std::vector<CameraPtr>& cameras() const { return cameras_; }
+		const CameraPtr& cur_camera() const { return cur_camera_; }
 	private:
 		template<typename Type>
 		void Find(const GameObjectPtr& game_object,std::vector<GameObjectPtr>& game_objects)
@@ -66,6 +67,7 @@ namespace aurora
 	private:
 		GameObjectPtr root_node_;
 		std::vector<CameraPtr> cameras_;
+		CameraPtr cur_camera_;	//当前正在渲染的摄像机
 		RenderQueue render_queue_;
 	};
 }

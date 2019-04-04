@@ -31,7 +31,7 @@ namespace aurora
 		void set_material(const MaterialPtr& material) { material_ = material; }
 		const MaterialPtr& material() const { return material_; }
 
-		void set_render_mode(GLenum render_mode);
+		void set_render_mode(GLenum render_mode) { render_mode_ = render_mode; }
 		GLenum render_mode() const { return render_mode_; }
 	private:
 		bool active_;

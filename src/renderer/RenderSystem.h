@@ -18,7 +18,7 @@ namespace aurora
 		
 		void BeginRender();
 		void EndRender();
-		void Render(GLenum render_mode,const MaterialPtr& material,const VertexArrayObjectPtr& vao);
+		void Render(const MaterialPtr& material, GLenum render_mode, const VertexArrayObjectPtr& vao,GLsizei instance_num);
 		void ChangeViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 
 		uint32_t viewport_width() const { return viewport_width_; }
