@@ -45,7 +45,9 @@ namespace aurora
 		// 对每个对象进行渲染
 		for (const auto& item : render_queue_)
 		{
+			item.second->BeginRender();
 			item.second->Render();
+			item.second->EndRender();
 		}
 	}
 

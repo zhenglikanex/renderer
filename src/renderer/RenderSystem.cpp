@@ -59,9 +59,10 @@ namespace aurora
 	void RenderSystem::Render(const MaterialPtr& material, GLenum render_mode, const VertexArrayObjectPtr& vao, GLsizei instance_num)
 	{
 		material->Bind();
+
 		if (vao->index_buffer())
 		{
-			if (vao->instance_stream().instance_buffer)
+			if (instance_num > 1 && vao->instance_stream().instance_buffer)
 			{
 				if (vao->index_buffer()->index_type() == IndexType::k16Bit)
 				{
@@ -86,7 +87,7 @@ namespace aurora
 		}
 		else
 		{
-			if (vao->instance_stream().instance_buffer)
+			if (instance_num > 1 && vao->instance_stream().instance_buffer)
 			{
 				glDrawArraysInstanced(render_mode, 0, vao->vertex_stream().vertex_buffer->vertex_num(), instance_num);
 			}

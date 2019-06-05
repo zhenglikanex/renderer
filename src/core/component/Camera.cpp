@@ -55,12 +55,14 @@ namespace aurora
 
 	glm::mat4x4 Camera::GetViewMatrix()
 	{
+		// 需要优化做cache
 		auto scene_node = GetGameObject()->GetComponent<SceneNode>();
 		return glm::lookAt(scene_node->position(), scene_node->position() + front_, up_);
 	}
 
 	glm::mat4x4 Camera::GetProjectionMatrix()
 	{
+		// 需要优化做cache
 		return glm::perspective(glm::radians(fov_), screen_width_ / screen_height_, near_panel_, far_panel_);
 	}
 

@@ -20,7 +20,7 @@ namespace aurora
 
 		void ClearInstance();
 		void AddInstance(const GameObjectPtr& go);
-		void GetInstanceNum();
+		size_t GetInstanceNum();
 
 		void set_active(bool active) { active_ = active; }
 		bool IsActive() const { return active_; }

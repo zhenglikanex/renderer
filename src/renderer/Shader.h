@@ -17,6 +17,8 @@ namespace aurora
 		static const std::string ProjMatrix;
 		static const std::string ViewMatrix;
 		static const std::string ModelMatrix;
+		static const std::string VPMatrix;
+		static const std::string MVPMatrix;
 	};
 
 	class Shader
