@@ -3,17 +3,19 @@
 
 #include "AuroraDef.h"
 #include "glSupport.h"
-#include "RenderOperation.h"
-#include "Renderable.h"
 
 namespace aurora
 {
-	class SubMesh : public Renderable
+	class SubMesh
 	{
 	public:
 		SubMesh();
 		~SubMesh();
+
+		void set_vao(const VertexArrayObjectPtr& vao) { vao_ = vao; }
+		const VertexArrayObjectPtr& vao() const { return vao_; }
 	public:
+		VertexArrayObjectPtr vao_;
 	};
 }
 

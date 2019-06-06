@@ -1,24 +1,12 @@
 #include "Renderable.h"
 
-#include "RenderSystem.h"
-#include "GpuBuffer.h"
-#include "VertexArrayObject.h"
-#include "Material.h"
-#include "Shader.h"
-#include "GameObject.h"
-#include "SceneNode.h"
-#include "Context.h"
-#include "SceneManager.h"
-#include "Camera.h"
-
-
 #include "glm/glm.hpp"
 
 namespace aurora
 {
-	Renderable::Renderable()
+	/*Renderable::Renderable()
 	{
-		
+
 	}
 
 	Renderable::~Renderable()
@@ -90,7 +78,7 @@ namespace aurora
 	void Renderable::ClearInstance()
 	{
 		instances_.clear();
-		
+
 	}
 
 	void Renderable::AddInstance(const GameObjectPtr& go)
@@ -101,5 +89,10 @@ namespace aurora
 	size_t Renderable::GetInstanceNum()
 	{
 		return instances_.size();
+	}*/
+
+	Renderable::~Renderable()
+	{
+		
 	}
 }

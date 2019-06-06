@@ -1,16 +1,18 @@
 #ifndef RENDERER_H_
 #define RENDERER_H_
 
+#include <vector>
+
 #include "AuroraDef.h"
 #include "IComponent.h"
 
 namespace aurora
 {
 	// äÖÈ¾×é¼þ
-	class Renderer : public IComponent
+	class MeshRenderer : public IComponent
 	{
 	public:
-		virtual ~Renderer() = 0;
+		virtual ~MeshRenderer() = 0;
 
 		IComponentPtr Clone() override;
 		void Copy(const IComponentPtr& component) override;
@@ -21,8 +23,10 @@ namespace aurora
 
 		void set_mesh(const MeshPtr& mesh) { mesh_ = mesh; }
 		const MeshPtr& mesh() const { return mesh_; }
+
 	private:
 		MeshPtr mesh_;
+		std::vector<MaterialPtr> materials_;
 	};
 }
 
