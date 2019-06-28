@@ -11,7 +11,7 @@ namespace aurora
 {
 	class SceneManager
 	{
-		using RenderQueue = std::vector<std::pair<MaterialPtr,RenderablePtr>>;
+		using RenderQueue = std::vector<std::pair<MaterialPtr,RenderCommand>>;
 
 	public:
 		SceneManager();
@@ -35,7 +35,8 @@ namespace aurora
 			return std::move((game_objects));
 		}
 
-		void AddRenderQuene(const RenderablePtr& renderable);
+		void GetInstanceBatchCommand( const Render )
+		void AddRenderQuene(const RenderCommandPtr& command);
 
 		const std::vector<CameraPtr>& cameras() const { return cameras_; }
 		const CameraPtr& cur_camera() const { return cur_camera_; }

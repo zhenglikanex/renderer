@@ -8,6 +8,7 @@ namespace aurora
 	class InstanceBatchCommand : public RenderCommand
 	{
 	public:
+		
 	private:
 	};
 }

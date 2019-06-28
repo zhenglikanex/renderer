@@ -24,7 +24,7 @@ namespace aurora
 	{
 		for(auto& item : render_queue_)
 		{
-			item.second->ClearInstance();
+			
 		}
 
 		render_queue_.clear();

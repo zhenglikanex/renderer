@@ -33,6 +33,7 @@ namespace aurora
 		//	
 		//	//submesh->AddInstance(GetGameObject());
 		//}
+		
 	}
 
 	void MeshRenderer::Dispose()

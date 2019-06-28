@@ -185,6 +185,18 @@ namespace aurora
 	class ResLoadDesc;
 	using ResLoadDescPtr = std::shared_ptr<ResLoadDesc>;
 	MAKE_SHARED_PTR(ResLoadDesc);
+
+	class RenderCommand;
+	using RenderCommandPtr = std::shared_ptr<RenderCommand>;
+	MAKE_SHARED_PTR(RenderCommand);
+
+	class MeshCommand;
+	using MeshCommandPtr = std::shared_ptr<MeshCommand>;
+	MAKE_SHARED_PTR(MeshCommand);
+
+	class InstanceBatchCommand;
+	using InstanceBatchCommandPtr = std::shared_ptr<InstanceBatchCommand>;
+	MAKE_SHARED_PTR(InstanceBatchCommand);
 }
 
 #endif
