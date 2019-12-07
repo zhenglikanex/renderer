@@ -24,6 +24,7 @@ add_dir_header_and_src(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 #find_library(glfw3)
 LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glfw3)
+
 #include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glfw3/include)
 
 add_subdirectory(3rdparty/glm)

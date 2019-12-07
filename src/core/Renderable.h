@@ -41,11 +41,12 @@ namespace aurora
 	//	GLenum render_mode_;
 	//};
 
-	class Renderable : public IComponent
+	class Renderable
 	{
 	public:
 		virtual ~Renderable() = 0;
 	private:
+
 	};
 }
 

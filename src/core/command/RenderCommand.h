@@ -1,6 +1,8 @@
 #ifndef RENDER_COMMAND_H_
 #define RENDER_COMMAND_H_
 
+#include <vector>
+
 #include "AuroraDef.h"
 #include "glSupport.h"
 
@@ -15,6 +17,8 @@ namespace aurora
 	class RenderCommand
 	{
 	public:
+		RenderCommand(GLenum render_mode, const VertexArrayObjectPtr& vao, const MaterialPtr& material);
+
 		// non-copy
 		RenderCommand(const RenderCommand&) = delete;
 		RenderCommand(RenderCommand&&) = delete;
@@ -23,7 +27,7 @@ namespace aurora
 
 		virtual ~RenderCommand() = 0;
 		
-		RenderCommandType type() const { return type_; }
+		virtual RenderCommandType type() const = 0;
 
 		GLenum render_mode() const { return render_mode_; }
 
@@ -33,12 +37,17 @@ namespace aurora
 		void set_material(const MaterialPtr& material) { material_ = material; }
 		const MaterialPtr& material() const { return material_; }
 
-	protected:
-		RenderCommandType type_;
+		virtual void BeginRender() = 0;
+		virtual void EndRender() = 0;
+		void Render();
 
+		void AddInstance(const GameObjectPtr& instance) { instances_.push_back(instance); }
+		uint32_t GetInstanceNum() const { return instances_.size(); }
+	protected:
 		GLenum render_mode_;
 		VertexArrayObjectPtr vao_;
 		MaterialPtr material_;
+		std::vector<GameObjectPtr> instances_;
 	};
 }
 

@@ -1,6 +1,8 @@
 #include "Context.h"
 #include "LogManager.h"
 #include "RenderSystem.h"
+#include "Resources.h"
+#include "SceneManager.h"
 
 namespace aurora
 {
@@ -22,8 +24,8 @@ namespace aurora
 			LOG_ERROR() << "aurora.config加载失败!" << LOG_END();
 		}
 
-		renderer_ = MakeRenderSystemPtr(config_);
-		if (!renderer_ || !renderer_->Initialized())
+		render_system_ = MakeRenderSystemPtr(config_);
+		if (!render_system_ || !render_system_->Initialized())
 		{
 			LOG_ERROR() << "RenderSystem初始化失败!" << LOG_END();
 		}
@@ -37,8 +39,8 @@ namespace aurora
 		}*/
 
 		// 创建默认资源
-		//Resources::GetInstance()->CreateDefaultMaterial();
-		//Resources::GetInstance()->CreateDefaultShader();
+		Resources::GetInstance()->CreateDefaultMaterial();
+		Resources::GetInstance()->CreateDefaultShader();
 
 		return true;
 	}
@@ -50,7 +52,8 @@ namespace aurora
 
 	void Context::Update()
 	{
-		renderer_->Render();
+		scene_manager_->Update();
+		//render_system_->Render();
 	}
 
 	void Context::Quit()

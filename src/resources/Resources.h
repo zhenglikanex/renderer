@@ -12,7 +12,8 @@ namespace aurora
 	class Resources : public Singleton<Resources>
 	{
 	public:
-		static MaterialPtr s_kSimpleMtl;
+		static MaterialPtr s_kDefaultMtl;
+
 		static MaterialPtr s_kNoramlMtl;
 		static MaterialPtr s_kDiffuseMtl;
 		static MaterialPtr s_kSpecularMtl;
@@ -35,12 +36,12 @@ namespace aurora
 		void CreateDefaultMaterial();
 		void CreateDefaultShader();
 
-		std::shared_ptr<void> FindResource(const std::string& name);
+		std::shared_ptr<void> FindResources(const std::string& name);
 
 		template<typename ResType>
 		std::shared_ptr<ResType> LoadResource(ResLoadDesc& res_load_desc)
 		{
-			auto resource = FindResource(res_load_desc.name());
+			auto resource = FindResources(res_load_desc.name());
 			if (resource)
 			{
 				return std::static_pointer_cast<ResType>(resource);

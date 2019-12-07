@@ -6,12 +6,13 @@
 #include "AuroraDef.h"
 #include "SceneNode.h"
 #include "GameObject.h"
+#include "RenderQueue.h"
+
 
 namespace aurora
 {
 	class SceneManager
 	{
-		using RenderQueue = std::vector<std::pair<MaterialPtr,RenderCommand>>;
 
 	public:
 		SceneManager();
@@ -32,11 +33,11 @@ namespace aurora
 			std::vector<GameObjectPtr> game_objects;
 			Find<Type>(root_node_, game_objects);
 			
-			return std::move((game_objects));
+			return game_objects;
 		}
 
-		void GetInstanceBatchCommand( const Render )
-		void AddRenderQuene(const RenderCommandPtr& command);
+		void AddRenderQuene(const RenderCommandPtr& command) { return render_queue_.AddRenderCommand(command); }
+		InstanceBatchCommandPtr GetInstanceBatchCommand(const MaterialPtr& material) { return render_queue_.GetInstanceBatchCommand(material); }
 
 		const std::vector<CameraPtr>& cameras() const { return cameras_; }
 		const CameraPtr& cur_camera() const { return cur_camera_; }

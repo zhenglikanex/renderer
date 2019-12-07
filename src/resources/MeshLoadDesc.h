@@ -10,7 +10,7 @@
 
 namespace aurora
 {
-	class MeshLoadDesc : ResLoadDesc
+	class MeshLoadDesc :public ResLoadDesc
 	{
 	public:
 		MeshLoadDesc(const std::string& name);

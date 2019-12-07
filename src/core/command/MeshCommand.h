@@ -8,11 +8,13 @@ namespace aurora
 	class MeshCommand : public RenderCommand
 	{
 	public:
-		MeshCommand();
+		MeshCommand(GLenum render_mode,const VertexArrayObjectPtr& vao,const MaterialPtr& material);
 		virtual ~MeshCommand();
 
-	private:
-		
+		RenderCommandType type() const override { return RenderCommandType::kMesh; }
+
+		void BeginRender() override;
+		void EndRender() override;
 	};
 }
 

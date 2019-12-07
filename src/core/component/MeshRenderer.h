@@ -2,6 +2,7 @@
 #define RENDERER_H_
 
 #include <vector>
+#include <unordered_map>
 
 #include "AuroraDef.h"
 #include "IComponent.h"
@@ -21,12 +22,24 @@ namespace aurora
 		void Update() override;
 		void Dispose() override;
 
-		void set_mesh(const MeshPtr& mesh) { mesh_ = mesh; }
+		void set_mesh(const MeshPtr& mesh) 
+		{
+			mesh_ = mesh; 
+			ResetMaterial();
+		}
 		const MeshPtr& mesh() const { return mesh_; }
 
+		uint32_t GetSubMeshCount() const;
+		
+		MaterialPtr GetMaterialByIndex(uint32_t index) const;
+		void AddMaterial(uint32_t index, const MaterialPtr& material);
+		void RemoveMaterial(uint32_t index);
+		void ResetMaterial();
 	private:
 		MeshPtr mesh_;
-		std::vector<MaterialPtr> materials_;
+		std::unordered_map<uint32_t, MaterialPtr> material_map_;
+
+		bool instanced_;
 	};
 }
 

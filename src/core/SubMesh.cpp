@@ -4,10 +4,7 @@
 
 namespace aurora
 {
-	
-	SubMesh::SubMesh(const VertexArrayObjectPtr& vao)
-		: vao_(vao)
-		, render_type_(GL_TRIANGLES)
+	SubMesh::SubMesh()
 	{
 
 	}
@@ -17,8 +14,4 @@ namespace aurora
 		
 	}
 
-	RenderOperation SubMesh::GetRenderOperation() const
-	{
-		return { render_type_ ,vao_ };
-	}
 }

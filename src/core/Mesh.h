@@ -14,7 +14,9 @@ namespace aurora
 		~Mesh();
 
 		void AddSubMesh(const SubMeshPtr& submesh_ptr);
-		const SubMeshPtr& GetSubMesh(size_t index) const;
+		const SubMeshPtr& GetSubMeshByIndex(size_t index) const;
+
+		uint32_t GetSubMeshCount() const { return submeshs_.size(); }
 
 		const std::vector<SubMeshPtr>& submeshs() const { return submeshs_; }
 	private:

@@ -8,6 +8,7 @@ namespace aurora
 	const std::string ShaderUniform::ProjMatrix = "proj_matrix";
 	const std::string ShaderUniform::ViewMatrix = "view_matrix";
 	const std::string ShaderUniform::ModelMatrix = "model_matrix";
+	const std::string ShaderUniform::NormalMatrix = "normal_matrix";
 	const std::string ShaderUniform::VPMatrix = "vp_matrix";
 	const std::string ShaderUniform::MVPMatrix = "mvp_matrix";
 

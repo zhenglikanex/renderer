@@ -12,7 +12,7 @@ namespace aurora
 		, local_position_(0, 0, 0)
 		, scale_(1, 1, 1)
 		, rotate_(0, 0, 0)
-		,transform_matrix_(glm::identity<glm::mat4>())
+		, model_matrix_(glm::identity<glm::mat4>())
 		,need_update_matrix_(false)
 	{
 

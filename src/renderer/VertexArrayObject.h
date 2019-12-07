@@ -15,6 +15,12 @@ namespace aurora
 	public:
 		struct Attrib
 		{
+			Attrib(GLuint _index, GLint _component_num, GLenum _type, GLboolean _normalized, size_t _offset)
+				:index(_index),component_num(_component_num),type(_type),normalized(_normalized),offset(_offset)
+			{
+
+			}
+
 			GLuint index;
 			GLint component_num;
 			GLenum type;

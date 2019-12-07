@@ -44,10 +44,15 @@ namespace aurora
 
 		const UniformValueMap& uniform_value_map() const { return uniform_value_map_; }
 		const TextureMap& texture_map() const { return texture_map_; }
+
+		void EnabledInstanced() { instanced_ = true; }
+		void DisabledInstance() { instanced_ = false; }
+		bool IsInstanced() const { return instanced_; }
 	private:
 		ShaderPtr shader_;
 		UniformValueMap uniform_value_map_;
 		TextureMap texture_map_;
+		bool instanced_;
 	};
 }
 

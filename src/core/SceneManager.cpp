@@ -5,6 +5,10 @@
 #include "GameObjectFactory.h"
 #include "Renderable.h"
 #include "Material.h"
+#include "RenderCommand.h"
+#include "MeshCommand.h"
+#include "InstanceBatchCommand.h"
+#include "Camera.h"
 
 namespace aurora
 {
@@ -22,9 +26,9 @@ namespace aurora
 	// 进行场景更新
 	void SceneManager::Update()
 	{
-		for(auto& item : render_queue_)
+		for (auto& item : render_queue_)
 		{
-			
+
 		}
 
 		render_queue_.clear();
@@ -37,17 +41,12 @@ namespace aurora
 
 		Visit(root_node_->GetComponent<SceneNode>());
 
-		std::sort(render_queue_.begin(), render_queue_.end(), [](const RenderQueue::value_type& lhs, const RenderQueue::value_type& rhs)
-		{
-			return lhs.first->Weight() < rhs.first->Weight();
-		});
+		render_queue_.sort();
 
 		// 对每个对象进行渲染
 		for (const auto& item : render_queue_)
 		{
-			item.second->BeginRender();
 			item.second->Render();
-			item.second->EndRender();
 		}
 	}
 
@@ -67,16 +66,7 @@ namespace aurora
 			return node->GetGameObject();
 		}
 
-		return GameObjectPtr();
-	}
-
-	void SceneManager::AddRenderQuene(const RenderablePtr& renderable)
-	{
-		if (renderable && renderable->material() && !renderable->IsActive())
-		{
-			render_queue_.push_back(std::make_pair(renderable->material(),renderable));
-			renderable->set_active(true);
-		}
+		return nullptr;
 	}
 
 	void SceneManager::Visit(const SceneNodePtr& scene_node)

@@ -56,7 +56,7 @@ namespace aurora
 	SubMeshPtr MeshLoadDesc::ProcessSubMesh(aiMesh * ai_mesh, const aiScene *scene)
 	{
 		VertexArrayObject::VertexStream stream;
-		stream.vertex_buffer = MakeVertexGpuBufferPtr(sizeof(V_P3_N3_T2), ai_mesh->mNumVertices, nullptr);
+		stream.vertex_buffer = MakeVertexGpuBufferPtr(VertexType::kV_P3_N3_T2, ai_mesh->mNumVertices, nullptr);
 		stream.attribs.emplace_back(VertexAttribIndex::kPosition,	3, GL_FLOAT, GL_FALSE, offsetof(V_P3_N3_T2, position));
 		stream.attribs.emplace_back(VertexAttribIndex::kNoraml,		3, GL_FLOAT, GL_FALSE, offsetof(V_P3_N3_T2, normal));
 		stream.attribs.emplace_back(VertexAttribIndex::kTexCoords,	2, GL_FLOAT, GL_FALSE, offsetof(V_P3_N3_T2, texcoords));

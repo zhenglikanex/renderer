@@ -19,7 +19,7 @@ namespace aurora
 	}
 	void GLFW3Window::CursorPositionCallback(GLFWwindow* window, double x, double y)
 	{
-		auto cur_window = Context::GetInstance()->renderer()->device_context()->window();
+		auto cur_window = Context::GetInstance()->render_system()->device_context()->window();
 		auto width = cur_window->width();
 		auto height = cur_window->height();
 
@@ -33,11 +33,11 @@ namespace aurora
 
 	void GLFW3Window::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 	{
-		auto cur_window = Context::GetInstance()->renderer()->device_context()->window();
+		auto cur_window = Context::GetInstance()->render_system()->device_context()->window();
 		cur_window->set_width(width);
 		cur_window->set_height(height);
 
-		Context::GetInstance()->renderer()->ChangeViewport(0, 0, width, height);
+		Context::GetInstance()->render_system()->ChangeViewport(0, 0, width, height);
 	}
 
 	GLFW3Window::GLFW3Window(const std::string& title_name, uint32_t width, uint32_t height)
