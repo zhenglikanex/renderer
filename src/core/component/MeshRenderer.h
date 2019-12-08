@@ -13,7 +13,8 @@ namespace aurora
 	class MeshRenderer : public IComponent
 	{
 	public:
-		virtual ~MeshRenderer() = 0;
+		MeshRenderer(){}
+		virtual ~MeshRenderer();
 
 		IComponentPtr Clone() override;
 		void Copy(const IComponentPtr& component) override;

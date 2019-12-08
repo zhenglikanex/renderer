@@ -22,6 +22,14 @@ class_name##Ptr Make##class_name##Ptr(Args&& ... args) \
 	return std::make_shared<class_name##>(std::forward<Args>(args)...); \
 }
 
+#define MAKE_UNIQUE_PTR(class_name) \
+template<typename ... Args> \
+class_name##UqePtr Make##class_name##UqePtr(Args&& ... args) \
+{	\
+	return std::make_unique<class_name##>(std::forward<Args>(args)...); \
+}
+
+
 namespace aurora
 {
 	class Window;
@@ -33,7 +41,9 @@ namespace aurora
 
 	class RenderSystem;
 	using RenderSystemPtr = std::shared_ptr<RenderSystem>;
+	using RenderSystemUqePtr = std::unique_ptr<RenderSystem>;
 	MAKE_SHARED_PTR(RenderSystem);
+	MAKE_UNIQUE_PTR(RenderSystem);
 
 	class DeviceContext;
 	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
@@ -140,7 +150,9 @@ namespace aurora
 
 	class SceneManager;
 	using SceneManagerPtr = std::shared_ptr<SceneManager>;
+	using SceneManagerUqePtr = std::unique_ptr<SceneManager>;
 	MAKE_SHARED_PTR(SceneManager);
+	MAKE_UNIQUE_PTR(SceneManager);
 
 	class GameObject;
 	using GameObjectPtr = std::shared_ptr<GameObject>;

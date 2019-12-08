@@ -8,6 +8,7 @@ namespace aurora
 
 	Material::Material(const ShaderPtr& shader)
 		:shader_(shader)
+		,instanced_(false)
 	{
 
 	}

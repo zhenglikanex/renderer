@@ -3,13 +3,15 @@
 #include "RenderState.h"
 #include "VertexGpuBuffer.h"
 #include "IndexGpuBuffer.h"
+#include "Context.h"
 
 namespace aurora
 {
 	VertexArrayObject::VertexArrayObject()
 		:need_update_vertex_stream_(false)
 	{
-
+		renderer_ = Context::GetInstance()->render_system();
+		glGenVertexArrays(1, &id_);
 	}
 
 	VertexArrayObject::~VertexArrayObject()
@@ -39,8 +41,9 @@ namespace aurora
 
 				for (auto attrib : vertex_stream_.attribs)
 				{
+					CHECK_GL_ERROR(glEnableVertexAttribArray(attrib.index));
 					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized,vertex_stream_.vertex_buffer->vertex_size(),(void*)attrib.offset));
-					glEnableVertexAttribArray(attrib.index);
+					
 				}
 			}
 
@@ -50,8 +53,8 @@ namespace aurora
 				for (auto attrib : instance_stream_.attribs)
 				{
 					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized, instance_stream_.size, (void*)attrib.offset));
-					glEnableVertexAttribArray(attrib.index);
-					glVertexAttribDivisor(attrib.index, 1);
+					CHECK_GL_ERROR(glEnableVertexAttribArray(attrib.index));
+					CHECK_GL_ERROR(glVertexAttribDivisor(attrib.index, 1));
 				}
 			}
 

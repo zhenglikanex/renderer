@@ -3,6 +3,7 @@
 #include "RenderSystem.h"
 #include "Resources.h"
 #include "SceneManager.h"
+#include "GameObjectFactory.h"
 
 namespace aurora
 {
@@ -24,10 +25,22 @@ namespace aurora
 			LOG_ERROR() << "aurora.config加载失败!" << LOG_END();
 		}
 
+		// 初始化
+		if (!GameObjectFactory::GetInstance()->Initialized())
+		{
+			LOG_ERROR() << "GameObjectFactory初始化失败!" << LOG_END();
+		}
+
 		render_system_ = MakeRenderSystemPtr(config_);
 		if (!render_system_ || !render_system_->Initialized())
 		{
 			LOG_ERROR() << "RenderSystem初始化失败!" << LOG_END();
+		}
+
+		scene_manager_ = MakeSceneManagerUqePtr();
+		if (!scene_manager_)
+		{
+			LOG_ERROR() << "ScenerManager初始化失败!" << LOG_END();
 		}
 
 		// 创建renerer
@@ -52,7 +65,9 @@ namespace aurora
 
 	void Context::Update()
 	{
+		render_system_->BeginRender();
 		scene_manager_->Update();
+		render_system_->EndRender();
 		//render_system_->Render();
 	}
 

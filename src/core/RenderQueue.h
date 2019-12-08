@@ -13,7 +13,13 @@ namespace aurora
 		using _RenderQueue = std::vector<std::pair<MaterialPtr, RenderCommandPtr>>;
 		using InstanceBatchCommandLookUp = std::unordered_map<MaterialPtr, InstanceBatchCommandPtr>;
 	public:
-		const _RenderQueue::iterator begin() { return render_queue_.begin(); }
+		RenderQueue() {
+
+		}
+
+		const _RenderQueue::iterator begin() { 
+			return render_queue_.begin(); 
+		}
 		const _RenderQueue::iterator end() { return render_queue_.end(); }
 
 		void sort();

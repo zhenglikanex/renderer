@@ -76,9 +76,9 @@ namespace aurora
 		switch (type)
 		{
 		case aurora::k16Bit:
-			return sizeof(uint32_t);
-		case aurora::k32Bit:
 			return sizeof(uint16_t);
+		case aurora::k32Bit:
+			return sizeof(uint32_t);
 		default:
 			break;
 		}

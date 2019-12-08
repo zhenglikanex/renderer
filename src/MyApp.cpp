@@ -1,4 +1,9 @@
 #include "MyApp.h"
+#include "Context.h"
+#include "GameObjectFactory.h"
+#include "MeshRenderer.h"
+#include "SceneManager.h"
+#include "Resources.h"
 
 MyApp::~MyApp()
 {
@@ -6,6 +11,14 @@ MyApp::~MyApp()
 }
 bool MyApp::OnCreate()
 {
+	auto mesh = LoadMesh("model/mayaCube.obj");
+
+	GameObjectPtr go = CREATE_GAMEOBJECT(GameObjectFactory::s_kMeshGameObject);
+	auto mesh_renderer = go->GetComponent<MeshRenderer>();
+	mesh_renderer->set_mesh(mesh);
+
+	Context::GetInstance()->scene_manager()->AddToRootNode(go);
+
 	return true;
 }
 void MyApp::OnDestory()

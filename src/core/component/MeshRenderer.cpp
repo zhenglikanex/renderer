@@ -11,14 +11,24 @@
 
 namespace aurora
 {
+	MeshRenderer::~MeshRenderer()
+	{
+
+	}
+
 	IComponentPtr MeshRenderer::Clone()
 	{
-		return nullptr;
+		return MakeMeshRendererPtr();
 	}
 
 	void MeshRenderer::Copy(const IComponentPtr& component)
 	{
-
+		auto mesh_renderer = std::dynamic_pointer_cast<MeshRenderer>(component);
+		if (mesh_renderer)
+		{
+			mesh_ = mesh_renderer->mesh_;
+			material_map_ = mesh_renderer->material_map_;
+		}
 	}
 
 	void MeshRenderer::Start()
@@ -46,6 +56,7 @@ namespace aurora
 			else
 			{
 				MeshCommandPtr command = MakeMeshCommandPtr(GL_TRIANGLES, submesh->vao(), material);
+				command->AddInstance(GetGameObject());
 				Context::GetInstance()->scene_manager()->AddRenderQuene(command);
 			}
 		}
@@ -98,7 +109,7 @@ namespace aurora
 		auto count = GetSubMeshCount();
 		for (uint32_t index = 0; index < count; ++index)
 		{
-			material_map_.emplace(index, Resources::s_kDefaultMtl);
+			material_map_.insert(std::make_pair(index, Resources::s_kDefaultMtl));
 		}
 	}
 }

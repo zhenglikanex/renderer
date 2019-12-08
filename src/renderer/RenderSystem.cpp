@@ -59,6 +59,8 @@ namespace aurora
 	void RenderSystem::Render(const MaterialPtr& material, GLenum render_mode, const VertexArrayObjectPtr& vao, GLsizei instance_num)
 	{
 		material->Bind();
+		vao->UpdateVaoToShader();
+		vao->Bind();
 
 		if (vao->index_buffer())
 		{
@@ -66,22 +68,22 @@ namespace aurora
 			{
 				if (vao->index_buffer()->index_type() == IndexType::k16Bit)
 				{
-					glDrawElementsInstanced(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_SHORT, 0, instance_num);
+					CHECK_GL_ERROR(glDrawElementsInstanced(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_SHORT, 0, instance_num));
 				}
 				else
 				{
-					glDrawElementsInstanced(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_INT, 0, instance_num);
+					CHECK_GL_ERROR(glDrawElementsInstanced(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_INT, 0, instance_num));
 				}
 			}
 			else
 			{
 				if (vao->index_buffer()->index_type() == IndexType::k16Bit)
 				{
-					glDrawElements(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_SHORT, 0);
+					CHECK_GL_ERROR(glDrawElements(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_SHORT, 0));
 				}
 				else
 				{
-					glDrawElements(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_INT, 0);
+					CHECK_GL_ERROR(glDrawElements(render_mode, vao->index_buffer()->index_num(), GL_UNSIGNED_INT, 0));
 				}
 			}
 		}
@@ -89,11 +91,11 @@ namespace aurora
 		{
 			if (instance_num > 1 && vao->instance_stream().instance_buffer)
 			{
-				glDrawArraysInstanced(render_mode, 0, vao->vertex_stream().vertex_buffer->vertex_num(), instance_num);
+				CHECK_GL_ERROR(glDrawArraysInstanced(render_mode, 0, vao->vertex_stream().vertex_buffer->vertex_num(), instance_num));
 			}
 			else
 			{
-				glDrawArrays(render_mode, 0, vao->vertex_stream().vertex_buffer->vertex_num());
+				CHECK_GL_ERROR(glDrawArrays(render_mode, 0, vao->vertex_stream().vertex_buffer->vertex_num()));
 			}
 		}
 	}
@@ -102,6 +104,6 @@ namespace aurora
 	{
 		viewport_width_ = width;
 		viewport_height_ = height;
-		glViewport(0, 0, viewport_width_, viewport_height_);
+		CHECK_GL_ERROR(glViewport(0, 0, viewport_width_, viewport_height_));
 	}
 }

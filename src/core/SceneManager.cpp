@@ -9,13 +9,19 @@
 #include "MeshCommand.h"
 #include "InstanceBatchCommand.h"
 #include "Camera.h"
+#include "SceneNode.h"
 
 namespace aurora
 {
 	SceneManager::SceneManager()
 	{
-		//root_node_ = CREATE_GAMEOBJECT(GameObjectFactory::s_kNodeGameObject);
+		root_node_ = CREATE_GAMEOBJECT(GameObjectFactory::s_kNodeGameObject);
 		root_node_->GetComponent<SceneNode>()->set_local_position(glm::vec3(0.0, 0.0, 0.0));
+
+		// Ä¬ÈÏÉãÏñ»ú
+		camera_ = CREATE_GAMEOBJECT(GameObjectFactory::s_kCameraGameObject);
+		auto node = camera_->GetComponent<SceneNode>();
+		node->set_local_position(glm::vec3(0.0, 0.0, -5.0));
 	}
 
 	SceneManager::~SceneManager()

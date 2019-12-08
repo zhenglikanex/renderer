@@ -24,7 +24,7 @@ namespace aurora
 		auto height = cur_window->height();
 
 		//InputManager::GetInstance()->InputCursorPos(float((x - width / 2) / width) * 2, float(0 - (y - height / 2) / height) * 2);
-		LOG_INFO() << "MOUSE_X:" << x << "MOUSE_Y" << y << LOG_END();
+		//LOG_INFO() << "MOUSE_X:" << x << "MOUSE_Y" << y << LOG_END();
 	}
 	void GLFW3Window::ScrollCallback(GLFWwindow* window, double x, double y)
 	{

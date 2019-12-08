@@ -40,6 +40,7 @@ namespace aurora
 			auto iter = bind_buffer_map_.find(target);
 			if (iter == bind_buffer_map_.end())
 			{
+				glBindBuffer(target, id);
 				bind_buffer_map_.emplace(target, id);
 			}
 			else if (iter->second != id)

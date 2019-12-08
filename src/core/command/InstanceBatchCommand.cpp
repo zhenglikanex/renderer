@@ -77,7 +77,7 @@ namespace aurora
 
 	void InstanceBatchCommand::SetupShaderUniform()
 	{
-		auto camera = Context::GetInstance()->scene_manager()->cur_camera();
+		auto camera = Context::GetInstance()->scene_manager()->camera()->GetComponent<Camera>();
 		auto shader = material_->shader();
 		shader->CommitMat4(ShaderUniform::ProjMatrix, camera->GetProjectionMatrix());
 		shader->CommitMat4(ShaderUniform::ViewMatrix, camera->GetViewMatrix());

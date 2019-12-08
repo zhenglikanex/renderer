@@ -40,7 +40,8 @@ namespace aurora
 		InstanceBatchCommandPtr GetInstanceBatchCommand(const MaterialPtr& material) { return render_queue_.GetInstanceBatchCommand(material); }
 
 		const std::vector<CameraPtr>& cameras() const { return cameras_; }
-		const CameraPtr& cur_camera() const { return cur_camera_; }
+		void set_camera(const GameObjectPtr& camera) { camera_ = camera; }
+		const GameObjectPtr& camera() const { return camera_; }
 	private:
 		template<typename Type>
 		void Find(const GameObjectPtr& game_object,std::vector<GameObjectPtr>& game_objects)
@@ -69,7 +70,7 @@ namespace aurora
 	private:
 		GameObjectPtr root_node_;
 		std::vector<CameraPtr> cameras_;
-		CameraPtr cur_camera_;	//当前正在渲染的摄像机
+		GameObjectPtr camera_;	//当前正在渲染的摄像机
 		RenderQueue render_queue_;
 	};
 }

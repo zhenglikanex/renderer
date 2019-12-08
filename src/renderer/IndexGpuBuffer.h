@@ -9,7 +9,7 @@ namespace aurora
 	class IndexGpuBuffer : public GpuBuffer
 	{
 	public:
-		IndexGpuBuffer(IndexType index_type, uint32_t index_num,const void* data);
+		IndexGpuBuffer(IndexType index_type,uint32_t index_size,uint32_t index_num,const void* data);
 		
 		IndexType index_type() const { return index_type_; }
 		uint32_t index_size() const { return index_size_; }

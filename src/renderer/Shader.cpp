@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "FileHelper.h"
-
+#include "glSupport.h"
 namespace aurora
 {
 	const std::string ShaderUniform::ProjMatrix = "proj_matrix";
@@ -34,7 +34,9 @@ namespace aurora
 
 	GLint Shader::GetUniformLocation(const std::string& name) const
 	{
-		return glGetUniformLocation(id_, name.c_str());
+		GLint loc = -1;
+		CHECK_GL_ERROR(loc = glGetUniformLocation(id_, name.c_str()));
+		return loc;
 	}
 
 	void Shader::CommitUniform(const std::string& name, const UniformValue& uniform)
@@ -174,7 +176,7 @@ namespace aurora
 
 	void Shader::Bind()
 	{
-		glUseProgram(id_);
+		CHECK_GL_ERROR(glUseProgram(id_));
 	}
 	
 	void Shader::UnBind()
@@ -187,6 +189,8 @@ namespace aurora
 		auto vs_shader = CreateShader(GL_VERTEX_SHADER, vs_file);
 		auto fs_shader = CreateShader(GL_FRAGMENT_SHADER, fs_file);
 		CreateProgram(vs_shader, fs_shader);
+
+		Bind();
 	}
 
 	void Shader::Load(const std::string& vs_file, const std::string& gs_file, const std::string& fs_file)
@@ -280,8 +284,8 @@ namespace aurora
 						<< "error:" << error_info << LOG_END();
 		}
 		
-		glDeleteShader(vs_shader);
-		glDeleteShader(fs_shader);
+		//glDeleteShader(vs_shader);
+		//glDeleteShader(fs_shader);
 	}
 
 	void Shader::CreateProgram(GLint vs_shader, GLint gs_shader, GLint fs_shader)

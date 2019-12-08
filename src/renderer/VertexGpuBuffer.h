@@ -9,10 +9,10 @@ namespace aurora
 	class VertexGpuBuffer : public GpuBuffer
 	{
 	public:
-		VertexGpuBuffer(VertexType vertex_type,uint32_t vertex_num,const void* data);
+		VertexGpuBuffer(VertexType vertex_type,uint32_t vertex_size, uint32_t vertex_num,const void* data);
 		~VertexGpuBuffer();
 
-		uint32_t vertex_type() const { return vertex_type_; }
+		VertexType vertex_type() const { return vertex_type_; }
 		uint32_t vertex_size() const { return vertex_size_; }
 		uint32_t vertex_num() const { return vertex_num_; }
 	private:

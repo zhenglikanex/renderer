@@ -7,7 +7,7 @@
 namespace aurora
 {
 	RenderCommand::RenderCommand(GLenum render_mode, const VertexArrayObjectPtr& vao, const MaterialPtr& material)
-		: render_mode_(render_mode_)
+		: render_mode_(render_mode)
 		, vao_(vao)
 		, material_(material)
 	{

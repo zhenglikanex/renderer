@@ -23,12 +23,12 @@ namespace aurora
 		bool quit() const { return quit_; }
 		const Config& config() const { return config_; }
 		const RenderSystemPtr& render_system() const { return render_system_; }
-		const SceneManagerPtr& scene_manager() const { return scene_manager_; }
+		const SceneManagerUqePtr& scene_manager() const { return scene_manager_; }
 	private:
 		bool quit_;
 		Config config_;
 		RenderSystemPtr render_system_;
-		SceneManagerPtr scene_manager_;
+		SceneManagerUqePtr scene_manager_;
 	};
 }
 

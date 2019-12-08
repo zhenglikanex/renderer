@@ -28,8 +28,9 @@ namespace aurora
 		}
 
 		auto instance = instances_.front();
-		auto camera = Context::GetInstance()->scene_manager()->cur_camera();
+		auto camera = Context::GetInstance()->scene_manager()->camera()->GetComponent<Camera>();
 		auto shader = material_->shader();
+		shader->Bind();
 		shader->CommitMat4(ShaderUniform::ProjMatrix, camera->GetProjectionMatrix());
 		shader->CommitMat4(ShaderUniform::ViewMatrix, camera->GetViewMatrix());
 		shader->CommitMat4(ShaderUniform::VPMatrix, camera->GetProjectionMatrix() * camera->GetViewMatrix());
