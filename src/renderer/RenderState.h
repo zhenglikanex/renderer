@@ -32,7 +32,8 @@ namespace aurora
 			}
 			bind_vao_ = vao;
 
-			glBindVertexArray(bind_vao_);
+			glBindVertexArray(vao);
+			bind_buffer_map_.clear();
 		}
 
 		void BindBuffer(GLenum target, GLuint id)

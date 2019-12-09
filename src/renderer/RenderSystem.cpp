@@ -5,13 +5,15 @@
 #include "VertexGpuBuffer.h"
 #include "IndexGpuBuffer.h"
 #include "GpuBuffer.h"
+#include "glm/glm.hpp"
+#include <array>
 
 namespace aurora 
 {
 	RenderSystem::RenderSystem(const Config& config)
 		:config_(config)
 	{
-
+		
 	}
 
 	RenderSystem::~RenderSystem()

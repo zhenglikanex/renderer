@@ -26,12 +26,14 @@ namespace aurora
 
 	void GpuBuffer::Bind()
 	{
-		renderer_->renderer_state()->BindBuffer(target_,id_);
+		//renderer_->renderer_state()->BindBuffer(target_,id_);
+		glBindBuffer(target_, id_);
 	}
 
 	void GpuBuffer::UnBind()
 	{
-		renderer_->renderer_state()->BindBuffer(target_, 0);
+		//renderer_->renderer_state()->BindBuffer(target_, 0);
+		glBindBuffer(target_, 0);
 	}
 
 	void GpuBuffer::Resize(GLsizeiptr size)

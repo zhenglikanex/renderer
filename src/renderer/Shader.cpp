@@ -284,8 +284,8 @@ namespace aurora
 						<< "error:" << error_info << LOG_END();
 		}
 		
-		//glDeleteShader(vs_shader);
-		//glDeleteShader(fs_shader);
+		glDeleteShader(vs_shader);
+		glDeleteShader(fs_shader);
 	}
 
 	void Shader::CreateProgram(GLint vs_shader, GLint gs_shader, GLint fs_shader)

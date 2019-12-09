@@ -31,10 +31,12 @@ namespace aurora
 
 	void VertexArrayObject::UpdateVaoToShader()
 	{
+		Bind();
+
 		if (need_update_vertex_stream_)
 		{
-			Bind();
-			
+			CHECK_GL_ERROR(int a = 1);
+
 			if (vertex_stream_.attribs.size() > 0 && vertex_stream_.vertex_buffer)
 			{
 				vertex_stream_.vertex_buffer->Bind();
@@ -43,7 +45,6 @@ namespace aurora
 				{
 					CHECK_GL_ERROR(glEnableVertexAttribArray(attrib.index));
 					CHECK_GL_ERROR(glVertexAttribPointer(attrib.index, attrib.component_num, attrib.type, attrib.normalized,vertex_stream_.vertex_buffer->vertex_size(),(void*)attrib.offset));
-					
 				}
 			}
 

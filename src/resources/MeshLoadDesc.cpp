@@ -80,8 +80,8 @@ namespace aurora
 			
 			//stream.vertex_buffer->WriteBuffer(0, vertexs.size() * VertexSize(VertexType::kV_P2_T2), data);
 		}
-		void* data = malloc(vertexs.size() * VertexSize(VertexType::kV_P2_T2));
-		memcpy(data, (void*)vertexs.data(), vertexs.size() * VertexSize(VertexType::kV_P2_T2));
+		void* data = malloc(vertexs.size() * VertexSize(VertexType::kV_P3_N3_T2));
+		memcpy(data, (void*)vertexs.data(), vertexs.size() * VertexSize(VertexType::kV_P3_N3_T2));
 		VertexArrayObject::VertexStream stream;
 		stream.vertex_buffer = MakeVertexGpuBufferPtr(VertexType::kV_P3_N3_T2, VertexSize(VertexType::kV_P3_N3_T2), ai_mesh->mNumVertices, data);
 		stream.attribs.emplace_back(VertexAttribIndex::kPosition, 3, GL_FLOAT, GL_FALSE, 0);
@@ -132,7 +132,7 @@ namespace aurora
 
 		auto vao = MakeVertexArrayObjectPtr();
 		vao->set_vertex_stream(stream);
-		CHECK_GL_ERROR(vao->set_index_buffer(index_buffer));
+		vao->set_index_buffer(index_buffer);
 
 		auto submesh = MakeSubMeshPtr();
 		submesh->set_vao(vao);
