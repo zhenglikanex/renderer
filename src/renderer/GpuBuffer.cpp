@@ -83,11 +83,12 @@ namespace aurora
 		// GL_MAP_INVALIDATE_RANGE_BIT  丢弃指定范围的缓存,不可与GL_MAP_READ_BIT同时使用,如果之后未写入，则缓存内容未定义
 		// GL_MAP_UNSYNCHRONIZED_BIT	使用自动同步(一般都使用)
 		// GL_MAP_FLUSH_EXPLICIT_BIT	允许应用程序显示通知刷新映射内容,必须与GL_MAP_WRITE_BIT同时使用
-
 		AURORA_ASSERT(
-			(((access & GL_MAP_INVALIDATE_BUFFER_BIT) != GL_MAP_INVALIDATE_BUFFER_BIT) || ((access & GL_MAP_READ_BIT) != GL_MAP_READ_BIT)) &&
-			(((access & GL_MAP_INVALIDATE_RANGE_BIT) != GL_MAP_INVALIDATE_RANGE_BIT) || ((access & GL_MAP_READ_BIT) != GL_MAP_READ_BIT)) &&
-			(((access & GL_MAP_FLUSH_EXPLICIT_BIT) == GL_MAP_FLUSH_EXPLICIT_BIT) && ((access & GL_MAP_WRITE_BIT) == GL_MAP_WRITE_BIT)));
+			((access & (GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_READ_BIT)) != (GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_READ_BIT)) &&
+			((access & (GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_READ_BIT)) != (GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_READ_BIT)) &&
+			(((access & GL_MAP_FLUSH_EXPLICIT_BIT) == 0) || ((access & GL_MAP_FLUSH_EXPLICIT_BIT) != 0) && ((access & GL_MAP_WRITE_BIT) != 0)) &&
+			"MapBuffer Access Error"
+		);
 
 		Bind();
 

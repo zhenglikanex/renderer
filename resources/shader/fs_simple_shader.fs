@@ -121,5 +121,51 @@ float PointShadowCalculation(vec3 frag_pos,vec3 light_pos)
 
 void main()
 {
+	//vec3 light_to_frag = frag_position - point_lights[0].position;
+	//gl_FragColor = vec4(vec3(texture(tex_pl_shadow,light_to_frag).r),1.0);
+
+	// 判断是否在阴影中
+	float shadow = 0.0;
+	for(int i = 0;i < 1;i++)
+	{
+		shadow = ShadowCalculation(dl_space_pos[i]);
+		if(shadow > 0.0)
+		{
+			break;
+		}
+	}
+	/*
+	if (shadow == 0.0)
+	{
+		for(int i = 0;i<1;i++)
+		{
+			shadow = PointShadowCalculation(frag_position,point_lights[i].position);
+			if(shadow > 0.0)
+			{
+				break;
+			}
+		}
+	}
+	*/
+	
+	int point_light_count = 1;
+
+	vec3 frag_color = vec3(texture(tex_diffuse,frag_tex_coord));
+	
+	// 最终的颜色
+	vec3 final_frag_color = frag_color * vec3(0.5,0.5,0.5);
+	
+	for(int i = 0;i< dir_light_count;i++)
+	{
+		final_frag_color = final_frag_color + (1.0 - shadow) * ComputeDireactionalLighting(frag_color,directional_lights[i]);
+	}
+	
+	for(int i = 0;i < point_light_count;i++)
+	{
+		final_frag_color = final_frag_color + ComputePointLighting(frag_color,point_lights[i]);
+	}
+	
+	//gl_FragColor = vec4(final_frag_color,1.0);
+	
 	gl_FragColor = vec4(1.0,1.0,1.0,1.0);
 }

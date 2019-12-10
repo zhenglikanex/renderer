@@ -92,7 +92,7 @@ namespace aurora
 		}
 
 		template<class T>
-		void operator>>(T dest)
+		void operator>>(T& dest)
 		{
 			read(&dest, sizeof(T));
 		}

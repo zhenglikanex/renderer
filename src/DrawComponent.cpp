@@ -18,24 +18,32 @@ namespace aurora
 {
 	DrawComponent::DrawComponent()
 	{
-		postions_ = 
+		std::array<glm::vec3,3> postions = 
 		{
 			glm::vec3(-0.5,0,0.0),
 			glm::vec3(0.0,1.0,0.0),
 			glm::vec3(0.5,0.0,0.0)
 		};
 
-		indexs_ =
+		std::array<uint32_t, 3>indexs =
 		{
 			0,1,2
 		};
 
 		VertexArrayObject::VertexStream stream;
-		stream.vertex_buffer = MakeVertexGpuBufferPtr(VertexType::kV_P3_N3_T2,sizeof(glm::vec3),postions_.size(),postions_.data());
+		stream.vertex_buffer = MakeVertexGpuBufferPtr(VertexType::kV_P3_N3_T2,sizeof(glm::vec3),postions.size(),nullptr);
 		stream.attribs.emplace_back(VertexAttribIndex::kPosition, 3, GL_FLOAT, GL_FALSE, 0);
+		{
+			GpuBuffer::Mapper mapper(stream.vertex_buffer, 0, stream.vertex_buffer->size(), GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT);
+			mapper.Write(postions.data(), postions.size() * sizeof(glm::vec3));
+		}
 
-		IndexGpuBufferPtr index_buffer = MakeIndexGpuBufferPtr(IndexType::k32Bit, sizeof(uint32_t), indexs_.size(), indexs_.data());
-		
+		IndexGpuBufferPtr index_buffer = MakeIndexGpuBufferPtr(IndexType::k32Bit, sizeof(uint32_t), indexs.size(),nullptr);
+		{
+			GpuBuffer::Mapper mapper(index_buffer, 0, index_buffer->size(), GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT);
+			mapper.Write(indexs.data(), indexs.size() * sizeof(uint32_t));
+		}
+
 		auto vao = MakeVertexArrayObjectPtr();
 		vao->set_vertex_stream(stream);
 		vao->set_index_buffer(index_buffer);

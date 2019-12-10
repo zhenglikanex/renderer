@@ -25,5 +25,13 @@ out vec4 dl_space_pos[MAX_DIRECTIONAL_LIGHT_COUNT];
 
 void main()
 {
-	gl_Position = vec4(pos.x,pos.y,pos.z,1.0);
+	gl_Position = vec4(pos.x,pos.y,pos.z,1.0);//proj_matrix * camera_matrix * model_matrix * vec4(pos.x,pos.y,pos.z,1.0);
+	frag_tex_coord = tex_coord;
+	frag_normal = mat3(transpose(inverse(model_matrix))) * normal;	//应该用uniform传递法线矩阵
+	frag_position = vec3(model_matrix * vec4(pos.x,pos.y,pos.z,1.0));
+	
+	for(int i = 0;i < dir_light_count;++i)
+	{
+		dl_space_pos[i] = dl_space_matrixs[i] * vec4(frag_position,1.0);
+	}
 }
