@@ -14,6 +14,12 @@ namespace aurora
 
 	GameObject::~GameObject()
 	{
+		auto iter = id_by_component_map_.begin();
+		while (iter != id_by_component_map_.end())
+		{
+			iter->second->Dispose();
+			iter = id_by_component_map_.erase(iter);
+		}
 	}
 
 	void GameObject::Update()

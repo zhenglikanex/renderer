@@ -62,7 +62,6 @@ namespace aurora
 	{
 		material->Bind();
 		vao->UpdateVaoToShader();
-		vao->Bind();
 
 		if (vao->index_buffer())
 		{

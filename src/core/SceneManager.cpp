@@ -21,7 +21,8 @@ namespace aurora
 		// Ä¬ÈÏÉãÏñ»ú
 		camera_ = CREATE_GAMEOBJECT(GameObjectFactory::s_kCameraGameObject);
 		auto node = camera_->GetComponent<SceneNode>();
-		node->set_local_position(glm::vec3(0.0, 0.0, -5.0));
+		node->set_local_position(glm::vec3(0.0, 1.0, 10.0));
+		AddToRootNode(camera_);
 	}
 
 	SceneManager::~SceneManager()

@@ -4,7 +4,7 @@
 #include "Resources.h"
 #include "SceneManager.h"
 #include "GameObjectFactory.h"
-
+#include "InputManager.h"
 namespace aurora
 {
 	Context::Context()

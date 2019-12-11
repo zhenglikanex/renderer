@@ -10,7 +10,7 @@ layout(location = 3) in vec3 tangent;
 layout(location = 4) in vec3 bitangent;
 
 uniform mat4 model_matrix;
-uniform mat4 camera_matrix;
+uniform mat4 view_matrix;
 uniform mat4 proj_matrix;
 
 uniform int dir_light_count;
@@ -25,7 +25,7 @@ out vec4 dl_space_pos[MAX_DIRECTIONAL_LIGHT_COUNT];
 
 void main()
 {
-	gl_Position = vec4(pos.x,pos.y,pos.z,1.0);//proj_matrix * camera_matrix * model_matrix * vec4(pos.x,pos.y,pos.z,1.0);
+	gl_Position = proj_matrix * view_matrix * model_matrix * vec4(pos.x,pos.y,pos.z,1.0);//proj_matrix * camera_matrix * model_matrix * vec4(pos.x,pos.y,pos.z,1.0);
 	frag_tex_coord = tex_coord;
 	frag_normal = mat3(transpose(inverse(model_matrix))) * normal;	//应该用uniform传递法线矩阵
 	frag_position = vec3(model_matrix * vec4(pos.x,pos.y,pos.z,1.0));

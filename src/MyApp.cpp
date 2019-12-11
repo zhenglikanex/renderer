@@ -5,6 +5,8 @@
 #include "SceneManager.h"
 #include "Resources.h"
 #include "DrawComponent.h"
+#include "InputManager.h"
+#include "CameraController.h"
 
 MyApp::~MyApp()
 {
@@ -22,6 +24,8 @@ bool MyApp::OnCreate()
 
 	Context::GetInstance()->scene_manager()->AddToRootNode(go);
 
+	Context::GetInstance()->scene_manager()->camera()->AddComponent<CameraController>();
+
 	return true;
 }
 void MyApp::OnDestory()
@@ -30,5 +34,5 @@ void MyApp::OnDestory()
 }
 void MyApp::OnUpdate()
 {
-
+	
 }

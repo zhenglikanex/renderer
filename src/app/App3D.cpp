@@ -6,6 +6,7 @@
 #include "Global.h"
 #include "Context.h"
 #include "Clock.h"
+#include "InputManager.h"
 
 namespace aurora
 {
@@ -39,11 +40,13 @@ namespace aurora
 
 	void App3D::Update()
 	{
-		// 处理引擎循环
-		Context::GetInstance()->Update();
-
 		// 更新游戏
 		OnUpdate();
+
+		InputManager::GetInstance()->Update();
+
+		// 处理引擎循环
+		Context::GetInstance()->Update();
 	}
 
 	void App3D::Run()

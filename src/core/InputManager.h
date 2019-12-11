@@ -146,21 +146,30 @@
 #define INPUT_PRESS                  1
 #define INPUT_REPEAT                 2
 
-
 namespace aurora
 {
+	enum InputState : int32_t
+	{
+		kNone		= -1,
+		kRelease	= 0,
+		kPress		= 1,
+		kRepeat		= 2
+	};
+
 	class InputManager : public Singleton<InputManager>
 	{
 	public:
+		void Update();
+
 		void Reset();
 
-		void InputKey(uint32_t key,uint32_t state);
-		void InputMouse(uint32_t mouse, uint32_t state);
+		void InputKey(uint32_t key, InputState state);
+		void InputMouse(uint32_t mouse, InputState state);
 		void InputScrollOffset(float offset_x, float offset_y);
 		void InputCursorPos(float x, float y);
 
-		uint32_t GetKey(uint32_t key);
-		uint32_t GetMouse(uint32_t mouse);
+		InputState GetKey(uint32_t key);
+		InputState GetMouse(uint32_t mouse);
 
 		float scroll_offset_x() const { return scroll_offset_x_; }
 		float scroll_offset_y() const { return scroll_offset_y_; }
@@ -168,8 +177,8 @@ namespace aurora
 		float cursor_pos_x() const { return cursor_pos_x_; }
 		float cursor_pos_y() const { return cursor_pos_y_; }
 	private:
-		std::unordered_map<uint32_t, uint32_t> key_states_;
-		std::unordered_map<uint32_t, uint32_t> mouse_states_;
+		std::unordered_map<uint32_t, InputState> key_states_;
+		std::unordered_map<uint32_t, InputState> mouse_states_;
 
 		float scroll_offset_x_;
 		float scroll_offset_y_;

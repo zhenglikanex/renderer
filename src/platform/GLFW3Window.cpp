@@ -10,12 +10,12 @@ namespace aurora
 {
 	void GLFW3Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		InputManager::GetInstance()->InputKey(key, action);
+		InputManager::GetInstance()->InputKey(key, (InputState)action);
 	}
 
 	void GLFW3Window::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 	{
-		InputManager::GetInstance()->InputMouse(button, action);
+		InputManager::GetInstance()->InputMouse(button, (InputState)action);
 	}
 	void GLFW3Window::CursorPositionCallback(GLFWwindow* window, double x, double y)
 	{
@@ -23,7 +23,7 @@ namespace aurora
 		auto width = cur_window->width();
 		auto height = cur_window->height();
 
-		//InputManager::GetInstance()->InputCursorPos(float((x - width / 2) / width) * 2, float(0 - (y - height / 2) / height) * 2);
+		InputManager::GetInstance()->InputCursorPos(float((x - width / 2) / width) * 2, float(0 - (y - height / 2) / height) * 2);
 		//LOG_INFO() << "MOUSE_X:" << x << "MOUSE_Y" << y << LOG_END();
 	}
 	void GLFW3Window::ScrollCallback(GLFWwindow* window, double x, double y)

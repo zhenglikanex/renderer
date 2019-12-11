@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "AuroraDef.h"
+#include "GameObject.h"
 
 namespace aurora
 {
