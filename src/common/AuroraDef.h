@@ -159,10 +159,20 @@ namespace aurora
 	using GameObjectWeakPtr = std::weak_ptr<GameObject>;
 	MAKE_SHARED_PTR(GameObject);
 
+	class ISceneNode;
+	using ISceneNodePtr = std::shared_ptr<ISceneNode>;
+	using ISceneNodeWeakPtr = std::weak_ptr<ISceneNode>;
+	MAKE_SHARED_PTR(ISceneNode);
+
 	class SceneNode;
 	using SceneNodePtr = std::shared_ptr<SceneNode>;
 	using SceneNodeWeakPtr = std::weak_ptr<SceneNode>;
 	MAKE_SHARED_PTR(SceneNode);
+
+	class SceneNode2D;
+	using SceneNode2DPtr = std::shared_ptr<SceneNode2D>;
+	using SceneNode2DWeakPtr = std::weak_ptr<SceneNode2D>;
+	MAKE_SHARED_PTR(SceneNode2D);
 
 	class MeshRenderer;
 	using MeshRendererPtr = std::shared_ptr<MeshRenderer>;
@@ -209,6 +219,12 @@ namespace aurora
 	class InstanceBatchCommand;
 	using InstanceBatchCommandPtr = std::shared_ptr<InstanceBatchCommand>;
 	MAKE_SHARED_PTR(InstanceBatchCommand);
+
+	class SpriteRenderer;
+	using SpriteRendererPtr = std::shared_ptr<SpriteRenderer>;
+	using SpriteRendererUqePtr = std::unique_ptr<SpriteRenderer>;
+	MAKE_SHARED_PTR(SpriteRenderer);
+	MAKE_UNIQUE_PTR(SpriteRenderer);
 }
 
 #endif

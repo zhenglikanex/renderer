@@ -10,7 +10,6 @@ namespace aurora
 	class SpriteRenderer : public IComponent
 	{
 	public:
-		SpriteRenderer();
 		~SpriteRenderer();
 
 		IComponentPtr Clone() override;
