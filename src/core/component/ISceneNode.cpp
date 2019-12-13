@@ -31,15 +31,12 @@ namespace aurora
 		}
 	}
 
-	IComponentPtr ISceneNode::Clone()
-	{
-		auto scene_node = MakeISceneNodePtr();
-		return scene_node;
-	}
-
 	void ISceneNode::Update()
 	{
-
+		if (need_update_matrix_)
+		{
+			UpdateModelMatrix();
+		}
 	}
 
 	void ISceneNode::AddChild(const GameObjectPtr& game_object)

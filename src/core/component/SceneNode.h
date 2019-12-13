@@ -6,14 +6,14 @@
 #include <memory>
 
 #include "AuroraDef.h"
-#include "IComponent.h"
+#include "ISceneNode.h"
 
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace aurora
 {
-	class SceneNode : public IComponent , public std::enable_shared_from_this<SceneNode>
+	class SceneNode : public ISceneNode , public std::enable_shared_from_this<SceneNode>
 	{
 	public:
 		SceneNode();

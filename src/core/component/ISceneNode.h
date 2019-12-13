@@ -12,16 +12,18 @@
 
 namespace aurora
 {
-	class ISceneNode : public IComponent, public std::enable_shared_from_this<SceneNode>
+	class ISceneNode : public IComponent, public std::enable_shared_from_this<ISceneNode>
 	{
 	public:
 		ISceneNode();
 		~ISceneNode();
+		
+		void Copy(const IComponentPtr& component) override;
 	public:
 		virtual void Update() override;
 
 		void AddChild(const GameObjectPtr& game_object);
-		void AddChild(const SceneNodePtr& node);
+		void AddChild(const ISceneNodePtr& node);
 		ISceneNodePtr FindByName(const std::string& name) const;
 		ISceneNodePtr Find(const std::string& name) const;
 
