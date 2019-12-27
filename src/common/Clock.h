@@ -8,7 +8,6 @@ namespace aurora
 	class Clock
 	{
 	public:
-
 		using clock_type = std::chrono::high_resolution_clock;
 		
 		Clock()
